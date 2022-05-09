@@ -1,0 +1,15 @@
+the user logs in to the system by its ID and Password
+	-> the User's ID must be the same as the Student's ID
+	-> the password field is included in its struct
+
+after it log in correctly, he can:
+	-> View his record (all his information is viewed in an organized structure) 
+	-> Edit his name
+	-> Edit his Password
+	
+
+So you must have functions to do this:
+	-> View the record of the user
+		- ⁯NOTE: he's just logged in, so his ID is saved, you must NOT ask him to enter it again
+	-> Edit his name
+	-> Edit his password
