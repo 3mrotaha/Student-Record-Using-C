@@ -1,0 +1,16 @@
+the student record must include the following:
+	-> full name
+	-> id
+	-> age
+	-> gender
+	-> grades
+
+	note: the student Password is Included in the User Module for the login purposes, but here we need only to collect the students information that 
+	        would be used (viewed or removed or edited) by the user or the admin.
+	
+	note: if a student record is added you must add its login info to the User module too, so its ID and a new unique password are added to the 
+	        User's Database.
+
+	note: if a student record is removed, also its related information in the User module is also deleted, which means this student ID and Password
+	        are going to be removed from the User Database
+
