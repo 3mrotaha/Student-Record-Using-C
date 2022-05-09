@@ -1,0 +1,16 @@
+the Admin logs in by his ID and Password
+	-> the admins IDs and passwords must be all unique
+	-> the admin's struct includes the name, ID, password. (you can add more info, like its job, just for fun)
+
+After logging in, the admin can do the following:
+	-> Add student reord.
+	-> remove student record
+	-> remove all the records (delete the whole database, not a logic but do it)
+	-> view all the records
+	-> view only one record (here you must ask him to enter the student id to view this specific record)
+	-> edit the student grades (here you have to ask him which grade he want to edit, as each index of the grades is specified for a subject)
+		- for example: you have array of 3 grades, index 0 is for programming, 1 for math, 2 for physics.
+		- you view this scheme on the screen and the admin enters a number to choose the subject that he wants to edit its grade
+	
+	- > the Admin can Edit his OWN password
+
