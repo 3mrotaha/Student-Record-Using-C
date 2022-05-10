@@ -31,6 +31,6 @@ static inline uint_32 Std_Inuint32GetString(uint_8** Str);
  * functionality :  it allocates memory for a the string    *
  *                  and reads a string.                     * 
  ************************************************************/
-static inline uint_32 Std_Inuint32CopyRec(Student* Ptr, const Student* O_Ptr);
+static inline uint_32 Std_Inuint32CopyRec(Student_t* Ptr, const Student_t* O_Ptr);
 
 #endif
