@@ -21,7 +21,7 @@ static inline uint_32 Std_Inuint32Search(uint_8* ID);
  * functionality :  it allocates memory for a the string    *
  *                  and reads a string.                     * 
  ************************************************************/
-static inline uint_32 Std_uint32GetString(uint_8* Str);
+static inline uint_32 Std_Inuint32GetString(uint_8* Str);
 
 /************************************************************
  * Name :           Std_uint32GetDatabaseLength             *
@@ -30,7 +30,7 @@ static inline uint_32 Std_uint32GetString(uint_8* Str);
  * functionality :  it takes the student id, and return     *
  *                  the index of its record in the database * 
  ************************************************************/
-static inline uint_32 Std_uint32GetDatabaseLength();
+static inline uint_32 Std_Inuint32GetDatabaseLength();
 
 
 #endif
