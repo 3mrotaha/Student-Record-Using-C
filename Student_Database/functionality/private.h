@@ -17,20 +17,20 @@ static inline uint_32 Std_Inuint32Search(uint_8* ID);
 /************************************************************
  * Name :           Std_uint32GetString                     *
  * return type :    unsigned int                            *
- * parameters :     str(pointer to unsigned char)           *
+ * parameters :    str(pointer to pointer to unsigned char) *
  * functionality :  it allocates memory for a the string    *
  *                  and reads a string.                     * 
  ************************************************************/
-static inline uint_32 Std_Inuint32GetString(uint_8* Str);
+static inline uint_32 Std_Inuint32GetString(uint_8** Str);
 
 /************************************************************
- * Name :           Std_uint32GetDatabaseLength             *
+ * Name :           Std_Inuint32CopyRec                     *
  * return type :    unsigned int                            *
- * parameters :     ID(the student ID)                      *
- * functionality :  it takes the student id, and return     *
- *                  the index of its record in the database * 
+ * parameters :    -Ptr_Database : pointer to struct        *
+ *                 - O_Ptr_Database: pointer to struct      *
+ * functionality :  it allocates memory for a the string    *
+ *                  and reads a string.                     * 
  ************************************************************/
-static inline uint_32 Std_Inuint32GetDatabaseLength();
-
+static inline uint_32 Std_Inuint32CopyRec(Student* Ptr, const Student* O_Ptr);
 
 #endif
