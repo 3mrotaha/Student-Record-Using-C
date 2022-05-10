@@ -92,9 +92,35 @@ uint_32 Std_uint32AddRec(void){
 }
 
 
-uint_32 Std_uint32EditName(uint_32* ID, uint_32* NewName);
+uint_32 Std_uint32EditName(uint_32* ID){
+	// get the index of the student record
+	uint_32 Record_Index = Std_Inuint32Search(ID);
+	// delete the old name
+	free(ptr_Database[Record_Index].full_name);
+	// assign the pointer to NULL
+	ptr_Database[Record_Index].full_name = NULL;
+	
+	// get the new name
+	printf("Enter the new Full Name: ");
+	Std_Inuint32GetString(&ptr_Database[Record_Index].full_name);
+	// view changes for the user
+	printf("Student name changed to : %s", ptr_Database[Record_Index].full_name);
+}
 
-uint_32 Std_uint32EditGrades(uint_32* ID, uint_32 Num_Subjects, f32* Newgrades);
+uint_32 Std_uint32EditGrades(uint_32* ID){
+	// get the index of the student record
+	uint_32 Record_Index = Std_Inuint32Search(ID);
+	// get the new grades from the Admin
+	printf("Enter the New Gerades : ");
+	for(uint_16 i = 0; i < SUBJECTS_NUM; i++){
+		scanf("%i", &ptr_Database[Record_Index].grades[j]);
+	}
+	// view the new changes for the admin 
+	printf("%s's grades has changed to :\n", ptr_Database[Record_Index].full_name);
+	for(uint_16 i = 0; i < SUBJECTS_NUM; i++){
+		printf("%i\n", ptr_Database[Record_Index].grades[j]);
+	}
+}
 
 uint_32 Std_uint32GetDatabaseLength(void){
 	return DatabaseLength;
@@ -114,7 +140,7 @@ static inline uint_32 Std_Inuint32Search(uint_8* ID){
 static inline uint_32 Std_Inuint32GetString(uint_8** Str){
 	// allocatting enough memory (at first only) as we don't know
 	// how long the string will be.
-	*Str = (uint_8*) malloc(100 * sizeof(uint_8));
+	*Str = (uint_8*) malloc(35 * sizeof(uint_8));
 	
 	scanf("%s", *Str); // reading the string
 	

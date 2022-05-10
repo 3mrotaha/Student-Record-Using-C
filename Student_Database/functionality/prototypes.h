@@ -40,13 +40,12 @@ uint_32 Std_uint32AddRec(void);
 /*************************************************************
  * Name :           std_uint32EditName                       *
  * return type :    unsigned int                             *
- * parameters :     - ID : (the student ID)                  *
- *                  - NewName: new name of the student       *
+ * parameters :     ID : (the student ID)                    *
  * functionality :  it search for the record of the given ID *
  *                  and changes the name of this record to a *
  *                  new name taken from the user or admin    * 
  *************************************************************/
-uint_32 Std_uint32EditName(uint_32* ID, uint_32* NewName);
+uint_32 Std_uint32EditName(uint_32* ID);
 
 /***************************************************************
  * Name :           std_uint32EditGrades                       *
@@ -55,7 +54,7 @@ uint_32 Std_uint32EditName(uint_32* ID, uint_32* NewName);
  * functionality :  it takes the student id, looks for its     *
  *                record then change the grades of this record * 
  ***************************************************************/
-uint_32 Std_uint32EditGrades(uint_32* ID, uint_32 Num_Subjects, f32* Newgrades);
+uint_32 Std_uint32EditGrades(uint_32* ID);
 
 /************************************************************
  * Name :           Std_uint32GetDatabaseLength             *
