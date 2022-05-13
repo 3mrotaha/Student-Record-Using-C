@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "STD_TYPES.h"
-#include "Users.h"
+#include "userDB.h"
 
 
 User_t UserLoginInfo[NUMBER_OF_USERS] = {

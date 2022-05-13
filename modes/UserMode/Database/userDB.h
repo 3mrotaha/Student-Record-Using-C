@@ -5,7 +5,7 @@
 #define NUMBER_OF_USERS		10
 
 typedef struct{
-	uint_8* ID;			// the login id, its the same as the student id
+	uint_8* User_ID;   // the login id, its the same as the student id
 	
 	uint_8* Password;  //  the password as string
 }User_t;
