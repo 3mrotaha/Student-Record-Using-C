@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "..\..\Libraries\STD_TYPES.h"
-#include "..\Database\students.h"
-#include "private.h"
+#include "..\Database\studentsDB.h"
+#include "student_private.h"
 
 // this global variable follows the growth of the database
 uint_32 DatabaseLength = STUDENT_NUM;
