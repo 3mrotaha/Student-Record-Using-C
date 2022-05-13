@@ -31,11 +31,11 @@ uint_32 Std_uint32RemoveRec(uint_8* ID);
 /************************************************************
  * Name :           Std_uint32AddRec                        *
  * return type :    unsigned int                            *
- * parameters :     void                                    *
+ * parameters :     ID                                      *
  * functionality :  Adds a new student record into the      *
  *                  database and sort the database          *
  ************************************************************/
-uint_32 Std_uint32AddRec(void);
+uint_32 Std_uint32AddRec(uint_8* ID);
 
 /*************************************************************
  * Name :           std_uint32EditName                       *

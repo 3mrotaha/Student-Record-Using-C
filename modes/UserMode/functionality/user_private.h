@@ -14,7 +14,7 @@
  * functionality :  Search for the ID of the user in the databa-*
  *                  -se and return the index of its record      *
  ****************************************************************/
- static inline uint32 User_InUint32CheckRec(uint_8* ID);
+ static inline uint_32 User_InUint32CheckRec(uint_8* ID);
  
 /****************************************************************
  * Name :           User_InUint32GetString                      *
@@ -23,7 +23,7 @@
  * functionality :  used to read a string, and fits its memory  *
  *                  to the number of its characters             *
  ****************************************************************/
- static inline uint32 User_InUint32GetString(uint_8** Str);
+ static inline uint_32 User_InUint32GetString(uint_8** Str);
  
 /****************************************************************
  * Name :           User_InUint32CopyRecord                     *
@@ -31,6 +31,6 @@
  * parameters :     NewRec, Rec                                 *
  * functionality :  Copies a record of the database             *
  ****************************************************************/
- static inline uint32 User_InUint32CopyRecord(User_t* NewRec, User_t* Rec);
+ static inline uint_32 User_InUint32CopyRecord(User_t* NewRec, const User_t Rec);
  
 #endif

@@ -54,11 +54,11 @@
 /****************************************************************
  * Name :           User_uint32AddUser                          *
  * return type :    unsigned int                                *
- * parameters :     void                                        *
+ * parameters :     ID                                          *
  * functionality :  Adds the user in the given ID to the user   *
  *                  database                                    *  
  ****************************************************************/
- uint_32 User_uint32AddUser(void);
+ uint_32 User_uint32AddUser(uint_8* ID);
  
 /****************************************************************
  * Name :           User_uint32RemoveUser                       *
