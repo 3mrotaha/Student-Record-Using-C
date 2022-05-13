@@ -24,41 +24,41 @@
 /****************************************************************
  * Name :           User_uint32ViewStdRec                       *
  * return type :    unsigned int                                *
- * parameters :     void                                        *
+ * parameters :     ID                                          *
  * functionality :  Based on the ID that the user login with    *
  *	    			it view the record of the student contains  *
  *  				this ID									    *
  ****************************************************************/
- uint_32 User_uint32ViewStdRec(void);
+ uint_32 User_uint32ViewStdRec(uint_8* ID);
  
 /****************************************************************
  * Name :           User_uint32EditUsername                     *
  * return type :    unsigned int                                *
- * parameters :     void                                        *
+ * parameters :     ID                                          *
  * functionality :  Based on the ID that the user login with,   *
  *                  it detects the record of this ID, and enab- *
  *                  les the user to edit his name               *
  ****************************************************************/
- uint_32 User_uint32EditUsername(void);
+ uint_32 User_uint32EditUsername(uint_8* ID);
  
 /****************************************************************
  * Name :           User_uint32EditPassword                     *
  * return type :    unsigned int                                *
- * parameters :     void                                        *
+ * parameters :     Record_Index                                *
  * functionality :  Based on the ID that the user login with,   *
  *                  it detects the record of this ID, and enab- *
  *                  les the user to edit his Login Password     *
  ****************************************************************/
- uint_32 User_uint32EditPassword(void);
+ uint_32 User_uint32EditPassword(uint_32 Record_Index);
  
 /****************************************************************
  * Name :           User_uint32AddUser                          *
  * return type :    unsigned int                                *
- * parameters :     ID                                          *
+ * parameters :     void                                        *
  * functionality :  Adds the user in the given ID to the user   *
  *                  database                                    *  
  ****************************************************************/
- uint_32 User_uint32AddUser(uint_8* ID);
+ uint_32 User_uint32AddUser(void);
  
 /****************************************************************
  * Name :           User_uint32RemoveUser                       *

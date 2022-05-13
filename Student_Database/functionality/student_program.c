@@ -121,11 +121,8 @@ uint_32 Std_uint32AddRec(void){
 	}
 }
 
-
-uint_32 Std_uint32EditName(uint_8* ID){
+uint_32 Std_uint32EditName(uint_32 Record_Index){
 	if(ID != NULL){
-		// get the index of the student record
-		uint_32 Record_Index = Std_Inuint32Search(ID);
 		// delete the old name
 		free(ptr_Database[Record_Index].full_name);
 		// get the new name
@@ -173,6 +170,25 @@ uint_32 Std_uint32GetDatabaseLength(void){
 	return DatabaseLength;
 }
 
+uint_32 Std_uint32ViewRecord(uint_32 Record_Index){
+	if(ID != NULL){
+		if(Record_Index >= 0){
+			printf("*****************************************\n");
+			printf("* Name   : %s\t\t\t\t\t\t\t*\n", ptr_Database[Record_Index].full_name);
+			printf("* ID     : %s\t\t\t\t\t\t\t*\n", ptr_Database[Record_Index].Std_ID);
+			printf("* Gender : %s\t\t\t\t\t\t\t*\n", ptr_Database[Record_Index].gender);
+			printf("* Age    : %i\t\t\t\t\t\t\t*\n", ptr_Database[Record_Index].age);
+			printf("* Grades : \t\t\t\t\t\t\t\t*\n");
+			printf("* Total Grades : \t\t\t\t\t*\n");
+			printf("******************************************\n");
+			return 1; // worked as we expected
+		}
+	}
+	else{
+		return -2;
+	}
+	
+}
 
 static inline uint_32 Std_Inuint32Search(uint_8* ID){
 	for(uint_16 i = 0; i < DatabaseLength; i++){
