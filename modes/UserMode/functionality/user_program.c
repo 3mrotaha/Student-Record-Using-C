@@ -152,7 +152,19 @@ uint_32 User_uint32RemoveUser(uint_8* ID){
 	}
 }
 
-
+uint_32 User_uint32RemoveAllUsers(void){
+	// check if database is not empty
+	if(User_Database != NULL){
+		// remove database
+		free(User_Database);
+		User_Database = NULL;
+		return 1; // worked
+	}
+	else{
+		return -2; // null pointer
+	}
+}
+ 
 static inline uint_32 User_InUint32CheckRec(uint_8* ID){
 	if(ID != NULL){
 		// searching for the record index

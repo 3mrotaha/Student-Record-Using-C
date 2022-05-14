@@ -77,9 +77,22 @@ uint_32 Std_uint32RemoveRec(uint_8* ID){
 	else{
 		// this returned value tells the developer that this function has crashed
 		// or didn't work as we expected
-		return -1;
+		return -2;
 	}
 
+}
+
+uint_32 Std_uint32RemoveAll(void){
+	// check if the database is not empty
+	if(ptr_Database != NULL){
+		// free the database
+		free(ptr_Database);
+		ptr_Database = NULL;
+		return 1; // worked
+	}
+	else{
+		return -2; // null pointer
+	}
 }
 
 uint_32 Std_uint32AddRec(uint_8* ID){

@@ -68,5 +68,13 @@
  *                  user database                               *
  ****************************************************************/
  uint_32 User_uint32RemoveUser(uint_8* ID);
- 
+
+/****************************************************************
+ * Name :           User_uint32RemoveAllUsers                   *
+ * return type :    unsigned int                                *
+ * parameters :     void                                        *
+ * functionality :  Removes the user in the given ID from the   *
+ *                  user database                               *
+ ****************************************************************/
+ uint_32 User_uint32RemoveAllUsers(void);
 #endif

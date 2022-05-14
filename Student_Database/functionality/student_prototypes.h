@@ -20,20 +20,28 @@ uint_32 Std_uint32UploadDatabase(void);
 uint_32 Std_uint32Search(uint_8* ID);
 
 /************************************************************
- * Name :           Std_uint32Search                        *
+ * Name :           Std_uint32RemoveRec                     *
  * return type :    unsigned int                            *
  * parameters :     ID(the student ID)                      *
- * functionality :  it takes the student id, and return     *
- *                  the index of its record in the database * 
+ * functionality :  it takes the student id, removes the    *
+ *                  student record of this id               *
  ************************************************************/
 uint_32 Std_uint32RemoveRec(uint_8* ID);
+
+/************************************************************
+ * Name :           Std_uint32RemoveAll                     *
+ * return type :    unsigned int                            *
+ * parameters :     ID(the student ID)                      *
+ * functionality :  frees the database                      * 
+ ************************************************************/
+uint_32 Std_uint32RemoveAll(void);
 
 /************************************************************
  * Name :           Std_uint32AddRec                        *
  * return type :    unsigned int                            *
  * parameters :     ID                                      *
  * functionality :  Adds a new student record into the      *
- *                  database and sort the database          *
+ *                  database                                *
  ************************************************************/
 uint_32 Std_uint32AddRec(uint_8* ID);
 
