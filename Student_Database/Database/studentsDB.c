@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "../../Libraries/STD_TYPES.h"
-#include "students.h"
+#include "studentsDB.h"
 
 
 Student_t Database_of_Students[STUDENT_NUM] = {

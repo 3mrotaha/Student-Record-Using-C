@@ -33,4 +33,29 @@ static inline uint_32 Std_Inuint32GetString(uint_8** Str);
  ************************************************************/
 static inline uint_32 Std_Inuint32CopyRec(Student_t* Ptr, const Student_t* O_Ptr);
 
+/************************************************************
+ * Name :           Std_InvidPrintGrades                    *
+ * return type :    void                                    *
+ * parameters :     grades                                  *
+ * functionality :  prints the student grades               *
+ ************************************************************/
+static inline void Std_InvidPrintGrades(f32 grades[]);
+
+/************************************************************
+ * Name :           Std_Inf32TotalGrades                    *
+ * return type :    void                                    *
+ * parameters :     grades                                  *
+ * functionality :  sum the grades and gets the average and *
+ *                  percentage                              *
+ ************************************************************/
+static inline f32 Std_Inf32TotalGrades(f32 grades[]);
+
+/************************************************************
+ * Name :           Std_InvidGPA                            *
+ * return type :    void                                    *
+ * parameters :     sum , Full_grade                        *
+ * functionality :  prints the GPA                          *
+ ************************************************************/
+static inline void Std_InvidGPA(f32 sum, uint_32 Full_grade);
+
 #endif
