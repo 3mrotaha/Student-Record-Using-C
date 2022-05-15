@@ -77,7 +77,6 @@ static uint_8* App_ID;
 
  static sint_32 App_sint32AdminControl(void){
 	sint_32 Operation_Number;
-	printf("Welcome Back!\n\n");
 	printf(" (1) View a student record\n (2) View a All records\n (3) Remove a student record\n (4) Remove All records\n (5) Add A student\n");
 	printf(" (6) Edit Student grades\n (7) Edit Your Password\n");
 	printf("Choose an operation > ");

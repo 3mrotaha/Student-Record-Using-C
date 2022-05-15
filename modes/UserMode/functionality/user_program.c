@@ -87,7 +87,6 @@ sint_32 User_sint32EditUsername(uint_8* ID){
 	}
 }
 
-
 sint_32 User_sint32EditPassword(uint_8* ID){
 	if(ID != NULL){
 		// searching for the index of the user record
@@ -104,7 +103,6 @@ sint_32 User_sint32EditPassword(uint_8* ID){
 	}
 }
 
-
 sint_32 User_sint32AddUser(uint_8* ID){
 	// increase the user database by one;
 	User_DatabaseLength++;
@@ -119,7 +117,6 @@ sint_32 User_sint32AddUser(uint_8* ID){
 	printf("Enter a Password : ");
 	(void) User_Insint32GetString(&User_Database[User_DatabaseLength - 1].Password);
 }
-
 
 sint_32 User_sint32RemoveUser(uint_8* ID){
 	if(ID != NULL){
@@ -155,15 +152,20 @@ sint_32 User_sint32RemoveUser(uint_8* ID){
 }
 
 sint_32 User_sint32RemoveAllUsers(void){
-	// check if database is not empty
 	if(User_Database != NULL){
-		// remove database
-		free(User_Database);
-		User_Database = NULL;
-		return 1; // worked
+		// check if database is not empty
+		if(User_Database != NULL){
+			// remove database
+			free(User_Database);
+			User_Database = NULL;
+			return 1; // worked
+		}
+		else{
+			return -2; // null pointer
+		}	
 	}
 	else{
-		return -2; // null pointer
+		return -3;
 	}
 }
  
@@ -189,7 +191,7 @@ static inline sint_32 User_Insint32CheckRec(uint_8* ID){
 static inline sint_32 User_Insint32GetString(uint_8** Str){
 	// initialize the memory space with 35 unsigned characters
 	*Str = (uint_8*) malloc(35 * sizeof(uint_8));
-	scanf("%s", *Str); // reading the string 
+	scanf(" %[^\n]", *Str); // reading the string 
 	// reallocating a space fits the string length
 	*Str = (uint_8*) realloc(*Str, strlen(*Str) + 1);
 	

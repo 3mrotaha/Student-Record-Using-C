@@ -22,6 +22,7 @@ sint_32 Admin_sint32CheckLogin(uint_8* ID, uint_8* Password){
 		sint_32 Rec_Index = Admin_Insint32CheckRec(ID);
 		if(Rec_Index >= 0){
 			if(!strcmp(Password, AdminsInfo[Rec_Index].password)){
+				printf("\nWelcome Back %s!", AdminsInfo[Rec_Index].full_name);
 				return Rec_Index;
 			}	
 		}
@@ -37,7 +38,7 @@ sint_32 Admin_sint32EditPassword(uint_8* ID){
 		sint_32 Rec_Index = Admin_Insint32CheckRec(ID);
 		printf("Enter Your New Password : ");
 		(void) Admin_Insint32GetString(&AdminsInfo[Rec_Index].password);
-		printf("Password updated!");
+		printf("Password updated!\n");
 		return 1;	
 	}
 	else{
@@ -46,7 +47,7 @@ sint_32 Admin_sint32EditPassword(uint_8* ID){
 }
 
 sint_32 Admin_sint32ViewAllDatabase(void){
-	printf("\t\t\t(Name)\t\t\t(ID)\t\t\t(Gender)\t\t\t(Age)\t\t\t(Year Degree)");
+	printf("\t\t(full Name)\t\t\t\t(ID)\t\t(Gender)\t\t(Age)\t\t(Year Degree)\n");
 	for(int i = 0; i < Std_sint32GetDatabaseLength(); i++){
 		(void) Std_sint32ViewBrief(i); // printf a row with a brief about the student
 	}
@@ -58,9 +59,14 @@ sint_32 Admin_sint32ViewStudent(uint_8* ID){
 	if(ID != NULL){
 		// get the index of the student record in the students database
 		sint_32 Rec_Index = Std_sint32Search(ID);
-		// view the record 
-		(void) Std_sint32ViewRecord(Rec_Index);
-		return 1; // function worked 
+		// view the record
+		if(Rec_Index >= 0){
+			(void) Std_sint32ViewRecord(Rec_Index);	
+			return 1; // function worked, id is correct
+		}
+		else{
+			printf("Entered ID is not correct\n");
+		}
 	}
 	else{
 		return -2; // null pointer
@@ -126,7 +132,7 @@ static inline sint_32 Admin_Insint32CheckRec(uint_8* ID){
 static inline sint_32 Admin_Insint32GetString(uint_8** Str){
 	// initialize the memory space with 35 unsigned characters
 	*Str = (uint_8*) malloc(35 * sizeof(uint_8));
-	scanf("%s", *Str); // reading the string 
+	scanf(" %[^\n]", *Str); // reading the string 
 	// reallocating a space fits the string length
 	*Str = (uint_8*) realloc(*Str, strlen(*Str) + 1);
 	

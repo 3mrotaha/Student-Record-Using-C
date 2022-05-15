@@ -48,50 +48,64 @@ sint_32 Std_sint32Search(uint_8* ID){
 }
 
 sint_32 Std_sint32RemoveRec(uint_8* ID){
-	if(ID != NULL){
-		// get the index of the record
-		sint_32 Record_Index = Std_Insint32Search(ID);
-		// defining a new database that is less than the older by 1 student record
-		Student_t* NewPtr_Database = (Student_t*) malloc((DatabaseLength - 1) * sizeof(Student_t));
-		
-		for(uint_16 i = 0; i < DatabaseLength; i++){
-			// if i is not the index of the record we will remove
-			if(i != Record_Index){
-				// copy the old i(th) record into the new memory place, except the record 
-				// that we want to delete
-				Std_Insint32CopyRec(&NewPtr_Database[i], ptr_Database[i]);
+	if(ptr_Database != NULL){
+		if(ID != NULL){
+			// get the index of the record
+			sint_32 Record_Index = Std_Insint32Search(ID);
+			// defining a new database that is less than the older by 1 student record
+			Student_t* NewPtr_Database = (Student_t*) malloc((DatabaseLength - 1) * sizeof(Student_t));
+			
+			for(uint_16 i = 0; i < DatabaseLength; i++){
+				// if i is not the index of the record we will remove
+				if(i != Record_Index){
+					// copy the old i(th) record into the new memory place, except the record 
+					// that we want to delete
+					Std_Insint32CopyRec(&NewPtr_Database[i], ptr_Database[i]);
+				}
 			}
+			// decrease the follower of the database length by 1, as 1 record is actually now deleted
+			DatabaseLength--;
+			// free the old memory
+			free(ptr_Database);
+			// assign the pointer to the new memory
+			ptr_Database = NewPtr_Database;
+			// we don't need the new pointer then we assign it to NULL
+			NewPtr_Database = NULL;
+			
+			if(DatabaseLength == 0){
+				free(ptr_Database);
+				ptr_Database = NULL;
+			}
+			
+			// this return value can be used to ensure that the function worked as we expected
+			return DatabaseLength;
 		}
-		// decrease the follower of the database length by 1, as 1 record is actually now deleted
-		DatabaseLength--;
-		// free the old memory
-		free(ptr_Database);
-		// assign the pointer to the new memory
-		ptr_Database = NewPtr_Database;
-		// we don't need the new pointer then we assign it to NULL
-		NewPtr_Database = NULL;
-		
-		// this return value can be used to ensure that the function worked as we expected
-		return DatabaseLength;
+		else{
+			// this returned value tells the developer that this function has crashed
+			// or didn't work as we expected
+			return -2;
+		}
 	}
 	else{
-		// this returned value tells the developer that this function has crashed
-		// or didn't work as we expected
-		return -2;
+		printf("Nothing to Delete!\n");
 	}
-
 }
 
 sint_32 Std_sint32RemoveAll(void){
-	// check if the database is not empty
 	if(ptr_Database != NULL){
-		// free the database
-		free(ptr_Database);
-		ptr_Database = NULL;
-		return 1; // worked
+		// check if the database is not empty
+		if(ptr_Database != NULL){
+			// free the database
+			free(ptr_Database);
+			ptr_Database = NULL;
+			return 1; // worked
+		}
+		else{
+			return -2; // null pointer
+		}
 	}
 	else{
-		return -2; // null pointer
+		printf("Nothing to Delete!");
 	}
 }
 
@@ -121,7 +135,24 @@ sint_32 Std_sint32AddRec(uint_8* ID){
 		// Reading the Grades of the new student
 		printf("Enter the Student greades: ");
 		for(uint_16 j = 0; j < SUBJECTS_NUM; j++){
-			scanf("%0.2f", &ptr_Database[DatabaseLength - 1].grades[j]);
+			switch(j){
+			case 0:
+				printf("Math : ");
+			break;
+			case 1:
+				printf("Physics : ");
+			break;
+			case 2:
+				printf("Contol : ");
+			break;
+			case 3:
+				printf("ogic : ");
+			break;
+			case 4:
+				printf("Electronics : ");
+			break;
+		}
+			scanf("%f", &ptr_Database[DatabaseLength - 1].grades[j]);
 		}
 		
 		// returning the length of the database means the function worked as we excepted
@@ -223,11 +254,14 @@ sint_32 Std_sint32ViewRecord(sint_32 Record_Index){
 sint_32 Std_sint32ViewBrief(sint_32 Record_Index){
 	if(Record_Index < DatabaseLength){
 		// print the student name
-		printf("\t%s\t", ptr_Database[Record_Index].full_name);
-		printf("%s\t", ptr_Database[Record_Index].Std_ID);
-		printf("%s\t", ptr_Database[Record_Index].gender);
-		printf("%d\t", ptr_Database[Record_Index].age);
-		printf("%0.2f%%\t\n", (Std_Inf32TotalGrades(ptr_Database[Record_Index].grades) / (100 * SUBJECTS_NUM)) * 100.0);
+		printf("\t\t%s\t\t\t\t", ptr_Database[Record_Index].full_name);
+		printf("%s\t\t", ptr_Database[Record_Index].Std_ID);
+		printf("%s\t\t\t", ptr_Database[Record_Index].gender);
+		printf("%d\t\t", ptr_Database[Record_Index].age);
+		printf("%0.2f%%\t", (Std_Inf32TotalGrades(ptr_Database[Record_Index].grades) / (100 * SUBJECTS_NUM)) * 100.0);
+		printf("\t");
+		Std_InvidGPA(Std_Inf32TotalGrades(ptr_Database[Record_Index].grades), (100 * SUBJECTS_NUM));
+		printf("\n");
 		return 1;
 	}
 	else{
@@ -250,7 +284,7 @@ static inline sint_32 Std_Insint32GetString(uint_8** Str){
 		// how long the string will be.
 		*Str = (uint_8*) malloc(35 * sizeof(uint_8));
 		
-		scanf("%s", *Str); // reading the string
+		scanf(" %[^\n]", *Str); // reading the string
 		
 		// reallocatting a memory that fits the string we has just read
 		*Str = realloc(*Str, strlen(*Str) + 1);
