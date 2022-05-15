@@ -30,3 +30,9 @@ uint_32 Admin_uint32RemoveStudent(uint_8* ID);
 uint_32 Admin_uint32EditGrades(uint_8* ID);
 
 uint_32 Admin_uint32EditPassword(uint_8* ID);
+
+static inline uint_32 Admin_InUint32CheckRec(uint_8* ID);
+
+static inline uint_32 Admin_InUint32GetString(uint_8** Str);
+
+static inline uint_32 Admin_InUint32CopyRec(Admin_t* NewRec, const Admin_t Rec);

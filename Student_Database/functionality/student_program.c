@@ -236,32 +236,32 @@ static inline uint_32 Std_Inuint32GetString(uint_8** Str){
 	}
 }
 
-static inline uint_32 Std_Inuint32CopyRec(Student_t* Ptr, const Student_t* O_Ptr){
+static inline uint_32 Std_Inuint32CopyRec(Student_t* Ptr, const Student_t O_Ptr){
 	if(Ptr != NULL && O_Ptr != NULL){
-		/**********storing the student name***********/
+		/**********Copying the student name***********/
 		// allocating memory that fits the length of the name
-		Ptr->full_name = (uint_8*) malloc(strlen(O_Ptr->full_name) + 1);
+		Ptr->full_name = (uint_8*) malloc(strlen(O_Ptr.full_name) + 1);
 		// copying the name in the database to the ptr_Database
-		strcpy(Ptr->full_name, O_Ptr->full_name);
+		strcpy(Ptr->full_name, O_Ptr.full_name);
 
-		/*********storing the ID*********************/
+		/*********Copying the ID*********************/
 		// allocating memory that fits the length of the ID
-		Ptr->Std_ID = (uint_8*) malloc(strlen(O_Ptr->Std_ID) + 1);
+		Ptr->Std_ID = (uint_8*) malloc(strlen(O_Ptr.Std_ID) + 1);
 		// copying the ID in the database to the ptr_Database
-		strcpy(Ptr->Std_ID, O_Ptr->Std_ID);
+		strcpy(Ptr->Std_ID, O_Ptr.Std_ID);
 
-		/*********storing the Gender*********************/
+		/*********Copying the Gender*********************/
 		// allocating memory that fits the length of the Gender
-		Ptr->gender = (uint_8*) malloc(strlen(O_Ptr->gender) + 1);
+		Ptr->gender = (uint_8*) malloc(strlen(O_Ptr.gender) + 1);
 		// copying the Gender in the database to the ptr_Database
-		strcpy(Ptr->gender, O_Ptr->gender);
+		strcpy(Ptr->gender, O_Ptr.gender);
 
-		/*********storing the Age*********************/
-		Ptr->age = O_Ptr->age;
+		/*********Copying the Age*********************/
+		Ptr->age = O_Ptr.age;
 
-		/*********storing the Grades*********************/
+		/*********Copying the Grades*********************/
 		for(uint_16 j = 0; j < SUBJECTS_NUM; j++){
-			Ptr->grades[j] = O_Ptr->grades[j];
+			Ptr->grades[j] = O_Ptr.grades[j];
 		}
 		// this return value can be used to ensure that the function worked as we expected
 		return 1;
