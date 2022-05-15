@@ -39,7 +39,7 @@ uint_32 Std_uint32RemoveAll(void);
 /************************************************************
  * Name :           Std_uint32AddRec                        *
  * return type :    unsigned int                            *
- * parameters :     ID                                      *
+ * parameters :     ID  (new ID)                            *
  * functionality :  Adds a new student record into the      *
  *                  database                                *
  ************************************************************/
@@ -64,6 +64,14 @@ uint_32 Std_uint32EditName(uint_32 Record_Index);
  *                  new name taken from the user or admin    * 
  *************************************************************/
 uint_32 Std_uint32ViewRecord(uint_32 Record_Index);
+
+/*************************************************************
+ * Name :           Std_uint32ViewBrief                      *
+ * return type :    unsigned int                             *
+ * parameters :     Record_Index : (the student Record)      *
+ * functionality :  Views a Brief about the student          *
+ *************************************************************/
+uint_32 Std_uint32ViewBrief(uint_32 Record_Index);
 
 /***************************************************************
  * Name :           std_uint32EditGrades                       *

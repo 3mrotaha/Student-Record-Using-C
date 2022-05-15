@@ -1,4 +1,4 @@
-#ifndef_ADMIN_PRIVATE_
+#ifndef _ADMIN_PRIVATE_
 #define _ADMIN_PRIVATE_
 
 /****************************************************************
