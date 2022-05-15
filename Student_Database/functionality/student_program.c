@@ -6,24 +6,24 @@
 #include "student_private.h"
 
 // this global variable follows the growth of the database
-uint_32 DatabaseLength = STUDENT_NUM;
+static sint_32 DatabaseLength = STUDENT_NUM;
 
 // using the database in this file
 extern Student_t Database_of_Students[STUDENT_NUM];
 
 //pointer to the array of records
-Student_t* ptr_Database = NULL;
+static Student_t* ptr_Database = NULL;
 
 /************************************************************************************************/
 
-uint_32 Std_uint32UploadDatabase(void){
+sint_32 Std_sint32UploadDatabase(void){
 	// allocatting a memory that fits the current database
 	ptr_Database = (Student_t*) malloc(DatabaseLength * sizeof(Student_t));
 	
 	if(ptr_Database != NULL){
 		for(uint_16 i = 0; i < DatabaseLength; i++){
 			// copy the old i(th) record into the new memory place
-			Std_Inuint32CopyRec(&ptr_Database[i], Database_of_Students[i]);
+			Std_Insint32CopyRec(&ptr_Database[i], Database_of_Students[i]);
 		}
 		
 		// this return value can be used to ensure that the function worked as we expected
@@ -37,7 +37,7 @@ uint_32 Std_uint32UploadDatabase(void){
 }
 
 
-uint_32 Std_uint32Search(uint_8* ID){
+sint_32 Std_sint32Search(uint_8* ID){
 	for(uint_16 i = 0; i < DatabaseLength; i++){
 		// strcmp is a function that compares two strings and returns 0 if they equal each other
 		if(!strcmp(Database_of_Students[i].Std_ID, ID)){
@@ -47,10 +47,10 @@ uint_32 Std_uint32Search(uint_8* ID){
 	return -1; // if the given id is not existed in the database, return -1
 }
 
-uint_32 Std_uint32RemoveRec(uint_8* ID){
+sint_32 Std_sint32RemoveRec(uint_8* ID){
 	if(ID != NULL){
 		// get the index of the record
-		uint_32 Record_Index = Std_Inuint32Search(ID);
+		sint_32 Record_Index = Std_Insint32Search(ID);
 		// defining a new database that is less than the older by 1 student record
 		Student_t* NewPtr_Database = (Student_t*) malloc((DatabaseLength - 1) * sizeof(Student_t));
 		
@@ -59,7 +59,7 @@ uint_32 Std_uint32RemoveRec(uint_8* ID){
 			if(i != Record_Index){
 				// copy the old i(th) record into the new memory place, except the record 
 				// that we want to delete
-				Std_Inuint32CopyRec(&NewPtr_Database[i], ptr_Database[i]);
+				Std_Insint32CopyRec(&NewPtr_Database[i], ptr_Database[i]);
 			}
 		}
 		// decrease the follower of the database length by 1, as 1 record is actually now deleted
@@ -82,7 +82,7 @@ uint_32 Std_uint32RemoveRec(uint_8* ID){
 
 }
 
-uint_32 Std_uint32RemoveAll(void){
+sint_32 Std_sint32RemoveAll(void){
 	// check if the database is not empty
 	if(ptr_Database != NULL){
 		// free the database
@@ -95,7 +95,7 @@ uint_32 Std_uint32RemoveAll(void){
 	}
 }
 
-uint_32 Std_uint32AddRec(uint_8* ID){
+sint_32 Std_sint32AddRec(uint_8* ID){
 	if(ID != NULL){
 		// increase the follower of database length by 1
 		DatabaseLength++;
@@ -108,11 +108,11 @@ uint_32 Std_uint32AddRec(uint_8* ID){
 		
 		// Reading the name of the new student
 		printf("Enter The Student Full Name: ");
-		Std_Inuint32GetString(&ptr_Database[DatabaseLength - 1].full_name);
+		Std_Insint32GetString(&ptr_Database[DatabaseLength - 1].full_name);
 		
 		// Reading the Gender of the new student
 		printf("Enter the Student gender: ");
-		Std_Inuint32GetString(&ptr_Database[DatabaseLength - 1].gender);
+		Std_Insint32GetString(&ptr_Database[DatabaseLength - 1].gender);
 		
 		// Reading the Age of the new student
 		printf("Enter the Student age: ");
@@ -121,7 +121,7 @@ uint_32 Std_uint32AddRec(uint_8* ID){
 		// Reading the Grades of the new student
 		printf("Enter the Student greades: ");
 		for(uint_16 j = 0; j < SUBJECTS_NUM; j++){
-			scanf("%f", &ptr_Database[DatabaseLength - 1].grades[j]);
+			scanf("%0.2f", &ptr_Database[DatabaseLength - 1].grades[j]);
 		}
 		
 		// returning the length of the database means the function worked as we excepted
@@ -132,13 +132,13 @@ uint_32 Std_uint32AddRec(uint_8* ID){
 	}
 }
 
-uint_32 Std_uint32EditName(uint_32 Record_Index){
+sint_32 Std_sint32EditName(sint_32 Record_Index){
 	if(Record_Index >= 0){
 		// delete the old name
 		free(ptr_Database[Record_Index].full_name);
 		// get the new name
 		printf("Enter the new Full Name: ");
-		Std_Inuint32GetString(&ptr_Database[Record_Index].full_name);
+		Std_Insint32GetString(&ptr_Database[Record_Index].full_name);
 		// view changes for the user
 		printf("Student name changed to : %s", ptr_Database[Record_Index].full_name);
 		// this return value can be used to ensure that the function worked as we expected
@@ -151,10 +151,10 @@ uint_32 Std_uint32EditName(uint_32 Record_Index){
 
 }
 
-uint_32 Std_uint32EditGrades(uint_8* ID){
+sint_32 Std_sint32EditGrades(uint_8* ID){
 	if(ID != NULL){
 		// get the index of the student record
-		uint_32 Record_Index = Std_Inuint32Search(ID);
+		sint_32 Record_Index = Std_Insint32Search(ID);
 		// get the new grades from the Admin
 		printf("Enter the New Gerades : ");
 		for(uint_16 i = 0; i < SUBJECTS_NUM; i++){
@@ -175,7 +175,7 @@ uint_32 Std_uint32EditGrades(uint_8* ID){
 					printf("Edit Electronics Grades -> ");
 				break;
 			}
-			scanf("%i", &ptr_Database[Record_Index].grades[i]);
+			scanf("%d", &ptr_Database[Record_Index].grades[i]);
 		}
 		// view the new changes for the admin 
 		printf("%s's grades has changed successfully \n", ptr_Database[Record_Index].full_name);
@@ -190,27 +190,27 @@ uint_32 Std_uint32EditGrades(uint_8* ID){
 
 }
 
-uint_32 Std_uint32GetDatabaseLength(void){
+sint_32 Std_sint32GetDatabaseLength(void){
 	return DatabaseLength;
 }
 
-uint_32 Std_uint32ViewRecord(uint_32 Record_Index){
+sint_32 Std_sint32ViewRecord(sint_32 Record_Index){
 	if(Record_Index >= 0){
-		printf("*****************************************\n");
-		printf("*\t\t\t\t\t\t\t\t\t\t*\n");
-		printf("* Name   : %s\t\t\t\t\t\t\t*\n", ptr_Database[Record_Index].full_name);
-		printf("* ID     : %s\t\t\t\t\t\t\t*\n", ptr_Database[Record_Index].Std_ID);
-		printf("* Gender : %s\t\t\t\t\t\t\t*\n", ptr_Database[Record_Index].gender);
-		printf("* Age    : %i\t\t\t\t\t\t\t*\n", ptr_Database[Record_Index].age);
-		printf("*****************************************\n");
-		printf("* Grades : \t\t\t\t\t\t\t\t*\n");
+		printf("***********************************************************************************************\n");
+		printf("*\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
+		printf("* Name   : %s\t\t\t\t\t\t\t\t\t\t\n", ptr_Database[Record_Index].full_name);
+		printf("* ID     : %s\t\t\t\t\t\t\t\t\t\t\n", ptr_Database[Record_Index].Std_ID);
+		printf("* Gender : %s\t\t\t\t\t\t\t\t\t\t\n", ptr_Database[Record_Index].gender);
+		printf("* Age    : %i\t\t\t\t\t\t\t\t\t\t\n", ptr_Database[Record_Index].age);
+		printf("***********************************************************************************************\n");
+		printf("* Grades : \t\t\t\t\t\t\t\t\t\t\t\t\n");
 		Std_InvidPrintGrades(ptr_Database[Record_Index].grades);
-		printf("*\t\t\t\t\t\t\t\t\t\t*\n");
-		printf("* Total Grades : %0.2f%%", Std_Inf32TotalGrades(ptr_Database[Record_Index].grades));
-		Std_InvidGPA(Std_Inf32TotalGrades(ptr_Database[Record_Index].grades), SUBJECTS_NUM * 100);
-		printf("\t\t\t*\n");
-		printf("*\t\t\t\t\t\t\t\t\t\t*\n");
-		printf("******************************************\n");
+		printf("*\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
+		printf("* Total Grades : %0.2f%%", (Std_Inf32TotalGrades(ptr_Database[Record_Index].grades) / (SUBJECTS_NUM * 100)) * 100);
+		Std_InvidGPA(Std_Inf32TotalGrades(ptr_Database[Record_Index].grades), (SUBJECTS_NUM * 100));
+		printf("\t\t\t\t\t\t\t\t\t\n");
+		printf("*\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
+		printf("***********************************************************************************************\n");
 		return 1; // worked as we expected
 	}
 	else{
@@ -220,14 +220,14 @@ uint_32 Std_uint32ViewRecord(uint_32 Record_Index){
 	
 }
 
-uint_32 Std_uint32ViewBrief(uint_32 Record_Index){
+sint_32 Std_sint32ViewBrief(sint_32 Record_Index){
 	if(Record_Index < DatabaseLength){
 		// print the student name
-		printf("\t\t\t%s\t\t\t", ptr_Database[Record_Index].full_name);
-		printf("%s\t\t\t", ptr_Database[Record_Index].Std_ID);
-		printf("%s\t\t\t", ptr_Database[Record_Index].gender);
-		printf("%i\t\t\t", ptr_Database[Record_Index].age);
-		printf("%0.2f%%\t\t\t\n", Std_Inf32TotalGrades(ptr_Database[Record_Index].grades) / (100 * SUBJECTS_NUM));
+		printf("\t%s\t", ptr_Database[Record_Index].full_name);
+		printf("%s\t", ptr_Database[Record_Index].Std_ID);
+		printf("%s\t", ptr_Database[Record_Index].gender);
+		printf("%d\t", ptr_Database[Record_Index].age);
+		printf("%0.2f%%\t\n", (Std_Inf32TotalGrades(ptr_Database[Record_Index].grades) / (100 * SUBJECTS_NUM)) * 100.0);
 		return 1;
 	}
 	else{
@@ -235,7 +235,7 @@ uint_32 Std_uint32ViewBrief(uint_32 Record_Index){
 	}
 }
 
-static inline uint_32 Std_Inuint32Search(uint_8* ID){
+static inline sint_32 Std_Insint32Search(uint_8* ID){
 	for(uint_16 i = 0; i < DatabaseLength; i++){
 		// strcmp is a function that compares two strings and returns 0 if they equal each other
 		if(!strcmp(Database_of_Students[i].Std_ID, ID)){
@@ -245,8 +245,7 @@ static inline uint_32 Std_Inuint32Search(uint_8* ID){
 	return -1; // if the given id is not existed in the database, return -1
 }
 
-static inline uint_32 Std_Inuint32GetString(uint_8** Str){
-	if(*Str != NULL){
+static inline sint_32 Std_Insint32GetString(uint_8** Str){
 		// allocatting enough memory (at first only) as we don't know
 		// how long the string will be.
 		*Str = (uint_8*) malloc(35 * sizeof(uint_8));
@@ -257,15 +256,9 @@ static inline uint_32 Std_Inuint32GetString(uint_8** Str){
 		*Str = realloc(*Str, strlen(*Str) + 1);
 		// this return value can be used to ensure that the function worked as we expected
 		return 1;
-	}
-	else{
-		// this returned value tells the developer that this function has crashed
-		// or didn't work as we expected
-		return -1;
-	}
 }
 
-static inline uint_32 Std_Inuint32CopyRec(Student_t* Ptr, const Student_t O_Ptr){
+static inline sint_32 Std_Insint32CopyRec(Student_t* Ptr, const Student_t O_Ptr){
 	if(Ptr != NULL){
 		/**********Copying the student name***********/
 		// allocating memory that fits the length of the name
@@ -306,24 +299,24 @@ static inline void Std_InvidPrintGrades(f32 grades[]){
 	for(int i = 0; i < SUBJECTS_NUM; i++){
 		switch(i){
 			case 0:
-				printf("*\t\t\tMath -> ");
+				printf("*\t\tMath -> ");
 			break;
 			case 1:
-				printf("*\t\t\tPhysics -> ");
+				printf("*\t\tPhysics -> ");
 			break;
 			case 2:
-				printf("*\t\t\tContol -> ");
+				printf("*\t\tContol -> ");
 			break;
 			case 3:
-				printf("*\t\t\tLogic -> ");
+				printf("*\t\tLogic -> ");
 			break;
 			case 4:
-				printf("*\t\t\tElectronics -> ");
+				printf("*\t\tElectronics -> ");
 			break;
 		}
-		printf("%0.2f\t\t\t", grades[i]);
+		printf("%0.2f\t", grades[i]);
 		Std_InvidGPA(grades[i], 100);
-		printf("\t*\n");
+		printf("\t\t\t\t\t\t\t\t\t\t\n");
 	}
 }
 
@@ -335,8 +328,8 @@ static inline f32 Std_Inf32TotalGrades(f32 grades[]){
 	return sum;
 }
 
-static inline void Std_InvidGPA(f32 sum, uint_32 Full_grade){
-	f32 grade = sum / Full_grade;
+static inline void Std_InvidGPA(f32 sum, sint_32 Full_grade){
+	f32 grade = (sum / Full_grade) * 100.0;
 	if(grade < 60) printf("F");
 	else if(grade >= 60 && grade < 65) printf("E");
 	else if(grade >= 65 && grade < 67) printf("D");

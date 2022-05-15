@@ -6,32 +6,32 @@
 
 
 /************************************************************
- * Name:            Std_Inuint32Search                      *
- * return type :    unsigned int                            *
+ * Name:            Std_Insint32Search                      *
+ * return type :    signed int                              *
  * parameters :     ID(the student ID)                      *
  * functionality :  it takes the student id, and return     *
  *                  the index of its record in the database * 
  ************************************************************/
-static inline uint_32 Std_Inuint32Search(uint_8* ID);
+static inline sint_32 Std_Insint32Search(uint_8* ID);
 
 /************************************************************
- * Name :           Std_uint32GetString                     *
- * return type :    unsigned int                            *
+ * Name :           Std_sint32GetString                     *
+ * return type :    signed int                              *
  * parameters :    str(pointer to pointer to unsigned char) *
  * functionality :  it allocates memory for a the string    *
  *                  and reads a string.                     * 
  ************************************************************/
-static inline uint_32 Std_Inuint32GetString(uint_8** Str);
+static inline sint_32 Std_Insint32GetString(uint_8** Str);
 
 /************************************************************
- * Name :           Std_Inuint32CopyRec                     *
- * return type :    unsigned int                            *
+ * Name :           Std_Insint32CopyRec                     *
+ * return type :    signed int                              *
  * parameters :    -Ptr_Database : pointer to struct        *
  *                 - O_Ptr_Database: struct object          *
  * functionality :  it allocates memory for a the string    *
  *                  and reads a string.                     * 
  ************************************************************/
-static inline uint_32 Std_Inuint32CopyRec(Student_t* Ptr, const Student_t O_Ptr);
+static inline sint_32 Std_Insint32CopyRec(Student_t* Ptr, const Student_t O_Ptr);
 
 /************************************************************
  * Name :           Std_InvidPrintGrades                    *
@@ -56,6 +56,6 @@ static inline f32 Std_Inf32TotalGrades(f32 grades[]);
  * parameters :     sum , Full_grade                        *
  * functionality :  prints the GPA                          *
  ************************************************************/
-static inline void Std_InvidGPA(f32 sum, uint_32 Full_grade);
+static inline void Std_InvidGPA(f32 sum, sint_32 Full_grade);
 
 #endif

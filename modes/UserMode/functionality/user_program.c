@@ -10,20 +10,20 @@
 extern User_t UserLoginInfo[NUMBER_OF_USERS];
 
 // following the database length
-uint_32 User_DatabaseLength = NUMBER_OF_USERS;
+static sint_32 User_DatabaseLength = NUMBER_OF_USERS;
 
 // this pointer enables us to modify on the database in the runtime, with memory allocation
-User_t *User_Database;
+static User_t *User_Database = NULL;
 
 /*************************************************************************************************/
 
-uint_32 User_uint32UploadDatabase(void){
+sint_32 User_sint32UploadDatabase(void){
 	// Allocating memory fits the existing database
 	User_Database = (User_t*) malloc(User_DatabaseLength * sizeof(User_t));
 	if(User_Database != NULL){
 		// copying the records
 		for(int i = 0; i < User_DatabaseLength; i++){
-			User_InUint32CopyRecord(&User_Database[i], UserLoginInfo[i]);
+			User_Insint32CopyRecord(&User_Database[i], UserLoginInfo[i]);
 		}
 		return 1; // function worked
 	}
@@ -34,10 +34,10 @@ uint_32 User_uint32UploadDatabase(void){
 }
 
 
-uint_32 User_uint32CheckLogin(uint_8* ID, uint_8* Pswrd){
+sint_32 User_sint32CheckLogin(uint_8* ID, uint_8* Pswrd){
 	if(ID != NULL && Pswrd != NULL){
 		// searching for the record index
-		uint_32 RecIndex = User_InUint32CheckRec(ID);
+		sint_32 RecIndex = User_Insint32CheckRec(ID);
 		// if it returned a valid index
 		if(RecIndex >= 0){
 			// it will return 0 if the entered password matches the one in the data base
@@ -52,12 +52,12 @@ uint_32 User_uint32CheckLogin(uint_8* ID, uint_8* Pswrd){
 }
 
 
-uint_32 User_uint32ViewStdRec(uint_8* ID){
+sint_32 User_sint32ViewStdRec(uint_8* ID){
 	if(ID != NULL){
 		// geting the index of the record contains this ID from student database
-		uint_32 RecIndex = Std_uint32Search(ID);
+		sint_32 RecIndex = Std_sint32Search(ID);
 		if(RecIndex >= 0){
-			(void) Std_uint32ViewRecord(RecIndex);
+			(void) Std_sint32ViewRecord(RecIndex);
 			// returning the index of the record, assures that the function worked as we expected
 			return RecIndex;
 		}
@@ -73,12 +73,12 @@ uint_32 User_uint32ViewStdRec(uint_8* ID){
 }
 
 
-uint_32 User_uint32EditUsername(uint_8* ID){
+sint_32 User_sint32EditUsername(uint_8* ID){
 	if(ID != NULL){
 		// searching for this id in the student database
-		uint_32 RecIndex = Std_uint32Search(ID);
+		sint_32 RecIndex = Std_sint32Search(ID);
 		if(RecIndex >= 0){
-			return Std_uint32EditName(RecIndex);
+			return Std_sint32EditName(RecIndex);
 		}
 		return 1; // worked as expected
 	}
@@ -88,13 +88,15 @@ uint_32 User_uint32EditUsername(uint_8* ID){
 }
 
 
-uint_32 User_uint32EditPassword(uint_32 Record_Index){
-	if(Record_Index >= 0){
+sint_32 User_sint32EditPassword(uint_8* ID){
+	if(ID != NULL){
+		// searching for the index of the user record
+		sint_32 Record_Index = User_Insint32CheckRec(ID);
 		//deleting the old password
 		free(User_Database[Record_Index].Password);
 		// Getting the new password
 		printf("Enter New Password : ");
-		User_InUint32GetString(&User_Database[Record_Index].Password);
+		User_Insint32GetString(&User_Database[Record_Index].Password);
 		printf("Password Edited Successfully");
 	}
 	else{
@@ -103,7 +105,7 @@ uint_32 User_uint32EditPassword(uint_32 Record_Index){
 }
 
 
-uint_32 User_uint32AddUser(uint_8* ID){
+sint_32 User_sint32AddUser(uint_8* ID){
 	// increase the user database by one;
 	User_DatabaseLength++;
 	// reallocating space larger than the old one by one
@@ -115,22 +117,22 @@ uint_32 User_uint32AddUser(uint_8* ID){
 	
 	// making a password for the new record
 	printf("Enter a Password : ");
-	(void) User_InUint32GetString(&User_Database[User_DatabaseLength - 1].Password);
+	(void) User_Insint32GetString(&User_Database[User_DatabaseLength - 1].Password);
 }
 
 
-uint_32 User_uint32RemoveUser(uint_8* ID){
+sint_32 User_sint32RemoveUser(uint_8* ID){
 	if(ID != NULL){
 		// allocating a new empty database with a smaller size, to copy the existing database into it 
 		User_t* NewDB = (User_t*) malloc(User_DatabaseLength * sizeof(User_t));
 		// getting the index of the record to be deleted from the user database
-		uint_32 RecIndex = User_InUint32CheckRec(ID);
+		sint_32 RecIndex = User_Insint32CheckRec(ID);
 		// copying the records into the new database, but we won't copy the record that we will remove
 		for(int i = 0; i < User_DatabaseLength; i++){
 			// if i not the index of the record we will remove
 			if(i != RecIndex){
 				// copying records
-				User_InUint32CopyRecord(&NewDB[i], User_Database[i]);
+				User_Insint32CopyRecord(&NewDB[i], User_Database[i]);
 			}
 		}
 		
@@ -152,7 +154,7 @@ uint_32 User_uint32RemoveUser(uint_8* ID){
 	}
 }
 
-uint_32 User_uint32RemoveAllUsers(void){
+sint_32 User_sint32RemoveAllUsers(void){
 	// check if database is not empty
 	if(User_Database != NULL){
 		// remove database
@@ -165,7 +167,7 @@ uint_32 User_uint32RemoveAllUsers(void){
 	}
 }
  
-static inline uint_32 User_InUint32CheckRec(uint_8* ID){
+static inline sint_32 User_Insint32CheckRec(uint_8* ID){
 	if(ID != NULL){
 		// searching for the record index
 		for(int i = 0; i < User_DatabaseLength; i++){
@@ -184,23 +186,17 @@ static inline uint_32 User_InUint32CheckRec(uint_8* ID){
 }
 
 
-static inline uint_32 User_InUint32GetString(uint_8** Str){
-	if(*Str != NULL){
-		// initialize the memory space with 35 unsigned characters
-		*Str = (uint_8*) malloc(35 * sizeof(uint_8));
-		scanf("%s", *Str); // reading the string 
-		// reallocating a space fits the string length
-		*Str = (uint_8*) realloc(*Str, strlen(*Str) + 1);
-		
-		return 1; // worked as expected
-	}
-	else{
-		return -2;
-	}
+static inline sint_32 User_Insint32GetString(uint_8** Str){
+	// initialize the memory space with 35 unsigned characters
+	*Str = (uint_8*) malloc(35 * sizeof(uint_8));
+	scanf("%s", *Str); // reading the string 
+	// reallocating a space fits the string length
+	*Str = (uint_8*) realloc(*Str, strlen(*Str) + 1);
 	
+	return 1; // worked as expected
 }
 
-static inline uint_32 User_InUint32CopyRecord(User_t* NewRec, const User_t Rec){
+static inline sint_32 User_Insint32CopyRecord(User_t* NewRec, const User_t Rec){
 	if(NewRec != NULL){
 		// allocating memory fits the id length
 		NewRec->User_ID = (uint_8*) malloc(strlen(Rec.User_ID) + 1);
