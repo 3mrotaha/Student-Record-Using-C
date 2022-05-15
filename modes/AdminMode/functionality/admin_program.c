@@ -13,8 +13,15 @@ extern Admin_t AdminsInfo[NUMBER_OF_ADMINS];
 
 /*******************************************************************************************/
 sint_32 Admin_sint32UploadDatabases(void){
-	(void) Std_sint32UploadDatabase(); // upload student database 
-	return User_sint32UploadDatabase(); // upload the login info of the student
+	static sint_32 Database_Uploaded = 0;
+	if(!Database_Uploaded){
+		Database_Uploaded = 1;
+		(void) Std_sint32UploadDatabase(); // upload student database 
+		return User_sint32UploadDatabase(); // upload the login info of the student	
+	}
+	else{
+		return Database_Uploaded;
+	}
 }
 
 sint_32 Admin_sint32CheckLogin(uint_8* ID, uint_8* Password){
@@ -47,11 +54,17 @@ sint_32 Admin_sint32EditPassword(uint_8* ID){
 }
 
 sint_32 Admin_sint32ViewAllDatabase(void){
-	printf("\t\t(full Name)\t\t\t\t(ID)\t\t(Gender)\t\t(Age)\t\t(Year Degree)\n");
-	for(int i = 0; i < Std_sint32GetDatabaseLength(); i++){
-		(void) Std_sint32ViewBrief(i); // printf a row with a brief about the student
+	if(Std_sint32GetDatabaseLength != 0){
+		printf("\t\t(full Name)\t\t\t\t(ID)\t\t(Gender)\t\t(Age)\t\t(Year Degree)\n");
+		for(int i = 0; i < Std_sint32GetDatabaseLength(); i++){
+			(void) Std_sint32ViewBrief(i); // printf a row with a brief about the student
+		}
+		return 1; // done
 	}
-	return 1; // done
+	else{
+		printf("Oops! Database is Empty!\n");
+		return -2;
+	}
 }
 
 sint_32 Admin_sint32ViewStudent(uint_8* ID){
@@ -66,6 +79,7 @@ sint_32 Admin_sint32ViewStudent(uint_8* ID){
 		}
 		else{
 			printf("Entered ID is not correct\n");
+			return -1;
 		}
 	}
 	else{

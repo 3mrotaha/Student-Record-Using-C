@@ -43,7 +43,6 @@ static uint_8* App_ID;
 			 Login_Check = User_sint32CheckLogin(App_ID, Password);
 			 Login_Check = ((Login_Check >= 0)? 2:-1);
 		 }
-		printf("%d", Login_Check);
 		Login_Counter++;
 		
 		free(Password); 
@@ -75,7 +74,7 @@ static uint_8* App_ID;
  }
 
 
- static sint_32 App_sint32AdminControl(void){
+static sint_32 App_sint32AdminControl(void){
 	sint_32 Operation_Number;
 	printf(" (1) View a student record\n (2) View a All records\n (3) Remove a student record\n (4) Remove All records\n (5) Add A student\n");
 	printf(" (6) Edit Student grades\n (7) Edit Your Password\n");
@@ -96,7 +95,7 @@ static uint_8* App_ID;
 		case 3: // remove a student
 			printf("Enter the student ID : ");
 			App_InSint32GetString(&Std_Id);
-			Admin_sint32ViewStudent(Std_Id);
+			Admin_sint32RemoveStudent(Std_Id);
 			free(Std_Id);
 			Std_Id = NULL;
 			break;
@@ -125,7 +124,7 @@ static uint_8* App_ID;
  }
  
  
- static sint_32 App_sint32UserControl(void){
+static sint_32 App_sint32UserControl(void){
 	sint_32 Operation_Number;
 	printf("Welcome Back!\n\n");
 	printf(" (1) View a your record\n (2) Edit Student name\n (3) Edit Your Password\n");

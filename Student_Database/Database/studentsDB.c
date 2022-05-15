@@ -15,7 +15,7 @@ Student_t Database_of_Students[STUDENT_NUM] = {
 	{"Amr Mohamed", 		"1062321", "Male", 		16, {77, 30, 84, 87, 65}},
 	{"Amr Taha", 			"1072321", "Male", 		17, {74, 20, 74, 80, 54}},
 	{"Amr Elsharqwi", 		"1082321", "Male", 		21, {84, 10, 64, 94, 34}},
-	{"Amr Mahmoud", 			"1092321", "Male", 	21, {94, 0,  55, 83, 100}},
+	{"Amr Mahmoud", 		"1092321", "Male", 		21, {94, 0,  55, 83, 100}},
 	
 	{"Amr Ibrahem", 		"1102321", "Male", 		22, {98, 21, 90, 81, 45}},
 	{"Gharam Esam", 		"1112321", "Female", 	25, {88, 22, 91, 89, 98}},

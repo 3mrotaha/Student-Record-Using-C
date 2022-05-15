@@ -125,11 +125,12 @@ sint_32 User_sint32RemoveUser(uint_8* ID){
 		// getting the index of the record to be deleted from the user database
 		sint_32 RecIndex = User_Insint32CheckRec(ID);
 		// copying the records into the new database, but we won't copy the record that we will remove
-		for(int i = 0; i < User_DatabaseLength; i++){
+		for(int i = 0, j = 0; i < User_DatabaseLength; i++){
 			// if i not the index of the record we will remove
 			if(i != RecIndex){
 				// copying records
-				User_Insint32CopyRecord(&NewDB[i], User_Database[i]);
+				User_Insint32CopyRecord(&NewDB[j], User_Database[i]);
+				j++;
 			}
 		}
 		
@@ -158,6 +159,7 @@ sint_32 User_sint32RemoveAllUsers(void){
 			// remove database
 			free(User_Database);
 			User_Database = NULL;
+			User_DatabaseLength = 0;
 			return 1; // worked
 		}
 		else{
