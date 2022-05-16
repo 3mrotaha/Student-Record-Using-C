@@ -12,6 +12,14 @@
 sint_32 Admin_sint32UploadDatabases(void);
 
 /****************************************************************
+ * Name :           Admin_sint32CheckEmpty                      *
+ * return type :    signed int                                  *
+ * parameters :     void                                        *
+ * functionality :  Checks if the Database is empty             *
+ ****************************************************************/
+sint_32 Admin_sint32CheckEmpty(void);
+
+/****************************************************************
  * Name :           Admin_sint32CheckLogin                      *
  * return type :    signed int                                  *
  * parameters :     ID, Password                                *

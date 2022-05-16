@@ -12,7 +12,7 @@ static sint_32 DatabaseLength = STUDENT_NUM;
 extern Student_t Database_of_Students[STUDENT_NUM];
 
 //pointer to the array of records
-static Student_t* ptr_Database = NULL;
+Student_t* ptr_Database = NULL;
 
 /************************************************************************************************/
 
@@ -36,17 +36,28 @@ sint_32 Std_sint32UploadDatabase(void){
 	}
 }
 
-
 sint_32 Std_sint32Search(uint_8* ID){
 	for(uint_16 i = 0; i < DatabaseLength; i++){
 		// strcmp is a function that compares two strings and returns 0 if they equal each other
-		if(!strcmp(Database_of_Students[i].Std_ID, ID)){
+		if(!strcmp(ptr_Database[i].Std_ID, ID)){
 			return i; // if the given id equals the id of the i(th) record, return the index of this record
 		}
 	}
 	return -1; // if the given id is not existed in the database, return -1
 }
 
+sint_32 Std_sint_32GetName(uint_8* ID, uint_8** Username){
+	if(ID != NULL){
+		sint_32 Record_Index = Std_Insint32Search(ID);
+		*Username = (uint_8*) malloc(strlen(ptr_Database[Record_Index].full_name) + 1);
+		strcpy(*Username, ptr_Database[Record_Index].full_name);
+		
+		return 1;
+	}
+	else{
+		return -1;
+	}
+}
 sint_32 Std_sint32RemoveRec(uint_8* ID){
 	if(ptr_Database != NULL){
 		if(ID != NULL){
@@ -55,12 +66,13 @@ sint_32 Std_sint32RemoveRec(uint_8* ID){
 			// defining a new database that is less than the older by 1 student record
 			Student_t* NewPtr_Database = (Student_t*) malloc((DatabaseLength - 1) * sizeof(Student_t));
 			
-			for(uint_16 i = 0; i < DatabaseLength; i++){
+			for(uint_16 i = 0, j = 0; i < DatabaseLength; i++){
 				// if i is not the index of the record we will remove
 				if(i != Record_Index){
 					// copy the old i(th) record into the new memory place, except the record 
 					// that we want to delete
-					Std_Insint32CopyRec(&NewPtr_Database[i], ptr_Database[i]);
+					Std_Insint32CopyRec(&NewPtr_Database[j], ptr_Database[i]);
+					j++;
 				}
 			}
 			// decrease the follower of the database length by 1, as 1 record is actually now deleted
@@ -92,20 +104,17 @@ sint_32 Std_sint32RemoveRec(uint_8* ID){
 }
 
 sint_32 Std_sint32RemoveAll(void){
+	// check if the database is not empty
 	if(ptr_Database != NULL){
-		// check if the database is not empty
-		if(ptr_Database != NULL){
-			// free the database
-			free(ptr_Database);
-			ptr_Database = NULL;
-			return 1; // worked
-		}
-		else{
-			return -2; // null pointer
-		}
+		// free the database
+		free(ptr_Database);
+		ptr_Database = NULL;
+		DatabaseLength = 0;
+		return 1; // worked
 	}
 	else{
 		printf("Nothing to Delete!");
+		return -2;
 	}
 }
 
@@ -187,26 +196,26 @@ sint_32 Std_sint32EditGrades(uint_8* ID){
 		// get the index of the student record
 		sint_32 Record_Index = Std_Insint32Search(ID);
 		// get the new grades from the Admin
-		printf("Enter the New Gerades : ");
+		printf("Enter the New Gerades : \n");
 		for(uint_16 i = 0; i < SUBJECTS_NUM; i++){
 			switch(i){
 				case 0:
-					printf("Edit Math Grades -> ");
+					printf("Edit Math Grades        -> ");
 				break;
 				case 1:
-					printf("Edit Physics Grades -> ");
+					printf("Edit Physics Grades     -> ");
 				break;
 				case 2:
-					printf("Edit Contol Grades -> ");
+					printf("Edit Contol Grades      -> ");
 				break;
 				case 3:
-					printf("Edit Logic Grades -> ");
+					printf("Edit Logic Grades       -> ");
 				break;
 				case 4:
 					printf("Edit Electronics Grades -> ");
 				break;
 			}
-			scanf("%d", &ptr_Database[Record_Index].grades[i]);
+			scanf("%f", &ptr_Database[Record_Index].grades[i]);
 		}
 		// view the new changes for the admin 
 		printf("%s's grades has changed successfully \n", ptr_Database[Record_Index].full_name);
@@ -226,29 +235,35 @@ sint_32 Std_sint32GetDatabaseLength(void){
 }
 
 sint_32 Std_sint32ViewRecord(sint_32 Record_Index){
-	if(Record_Index >= 0){
-		printf("***********************************************************************************************\n");
-		printf("*\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
-		printf("* Name   : %s\t\t\t\t\t\t\t\t\t\t\n", ptr_Database[Record_Index].full_name);
-		printf("* ID     : %s\t\t\t\t\t\t\t\t\t\t\n", ptr_Database[Record_Index].Std_ID);
-		printf("* Gender : %s\t\t\t\t\t\t\t\t\t\t\n", ptr_Database[Record_Index].gender);
-		printf("* Age    : %i\t\t\t\t\t\t\t\t\t\t\n", ptr_Database[Record_Index].age);
-		printf("***********************************************************************************************\n");
-		printf("* Grades : \t\t\t\t\t\t\t\t\t\t\t\t\n");
-		Std_InvidPrintGrades(ptr_Database[Record_Index].grades);
-		printf("*\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
-		printf("* Total Grades : %0.2f%%", (Std_Inf32TotalGrades(ptr_Database[Record_Index].grades) / (SUBJECTS_NUM * 100)) * 100);
-		Std_InvidGPA(Std_Inf32TotalGrades(ptr_Database[Record_Index].grades), (SUBJECTS_NUM * 100));
-		printf("\t\t\t\t\t\t\t\t\t\n");
-		printf("*\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
-		printf("***********************************************************************************************\n");
-		return 1; // worked as we expected
+	if(ptr_Database != NULL){
+		if(Record_Index >= 0){
+			printf("***********************************************************************************************\n");
+			printf("*\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
+			printf("* Name   : %s\t\t\t\t\t\t\t\t\t\t\n", ptr_Database[Record_Index].full_name);
+			printf("* ID     : %s\t\t\t\t\t\t\t\t\t\t\n", ptr_Database[Record_Index].Std_ID);
+			printf("* Gender : %s\t\t\t\t\t\t\t\t\t\t\n", ptr_Database[Record_Index].gender);
+			printf("* Age    : %i\t\t\t\t\t\t\t\t\t\t\n", ptr_Database[Record_Index].age);
+			printf("***********************************************************************************************\n");
+			printf("* Grades : \t\t\t\t\t\t\t\t\t\t\t\t\n");
+			Std_InvidPrintGrades(ptr_Database[Record_Index].grades);
+			printf("*\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
+			printf("* Total Grades : %0.2f%%", (Std_Inf32TotalGrades(ptr_Database[Record_Index].grades) / (SUBJECTS_NUM * 100)) * 100);
+			Std_InvidGPA(Std_Inf32TotalGrades(ptr_Database[Record_Index].grades), (SUBJECTS_NUM * 100));
+			printf("\t\t\t\t\t\t\t\t\t\n");
+			printf("*\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
+			printf("***********************************************************************************************\n");
+			return 1; // worked as we expected
+		}
+		else{
+			// the index does not exist
+			printf("Wrong ID, Student Doesn't Exist!\n");
+			return -1;
+		}	
 	}
 	else{
-		// the index does not exist
-		return -1;
+		printf("Oops! Database is Empty!\n");
+		return -2;
 	}
-	
 }
 
 sint_32 Std_sint32ViewBrief(sint_32 Record_Index){
@@ -272,7 +287,7 @@ sint_32 Std_sint32ViewBrief(sint_32 Record_Index){
 static inline sint_32 Std_Insint32Search(uint_8* ID){
 	for(uint_16 i = 0; i < DatabaseLength; i++){
 		// strcmp is a function that compares two strings and returns 0 if they equal each other
-		if(!strcmp(Database_of_Students[i].Std_ID, ID)){
+		if(!strcmp(ptr_Database[i].Std_ID, ID)){
 			return i; // if the given id equals the id of the i(th) record, return the index of this record
 		}
 	}
@@ -333,16 +348,16 @@ static inline void Std_InvidPrintGrades(f32 grades[]){
 	for(int i = 0; i < SUBJECTS_NUM; i++){
 		switch(i){
 			case 0:
-				printf("*\t\tMath -> ");
+				printf("*\t\tMath        -> ");
 			break;
 			case 1:
-				printf("*\t\tPhysics -> ");
+				printf("*\t\tPhysics     -> ");
 			break;
 			case 2:
-				printf("*\t\tContol -> ");
+				printf("*\t\tContol      -> ");
 			break;
 			case 3:
-				printf("*\t\tLogic -> ");
+				printf("*\t\tLogic       -> ");
 			break;
 			case 4:
 				printf("*\t\tElectronics -> ");

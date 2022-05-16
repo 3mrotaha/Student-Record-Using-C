@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "..\..\..\Libraries\STD_TYPES.h"
+#include "..\..\..\Student_Database\functionality\student_prototypes.h"
 #include "..\Database\userDB.h"
 #include "user_private.h"
-#include "..\..\..\Student_Database\functionality\student_prototypes.h"
+
 
 // including user database into this file, to use or modify it
 extern User_t UserLoginInfo[NUMBER_OF_USERS];
@@ -38,11 +39,15 @@ sint_32 User_sint32CheckLogin(uint_8* ID, uint_8* Pswrd){
 	if(ID != NULL && Pswrd != NULL){
 		// searching for the record index
 		sint_32 RecIndex = User_Insint32CheckRec(ID);
+		uint_8* Username;
 		// if it returned a valid index
 		if(RecIndex >= 0){
 			// it will return 0 if the entered password matches the one in the data base
-			if(!strcmp(Pswrd, User_Database[RecIndex].Password))
+			if(!strcmp(Pswrd, User_Database[RecIndex].Password)){
+				Std_sint_32GetName(ID, &Username);
+				printf("Welcome Back, %s\n\n", Username);
 				return RecIndex; // enable access to the record
+			}
 		}
 		return -1; // password is not correct
 	}
@@ -125,11 +130,12 @@ sint_32 User_sint32RemoveUser(uint_8* ID){
 		// getting the index of the record to be deleted from the user database
 		sint_32 RecIndex = User_Insint32CheckRec(ID);
 		// copying the records into the new database, but we won't copy the record that we will remove
-		for(int i = 0; i < User_DatabaseLength; i++){
+		for(int i = 0, j = 0; i < User_DatabaseLength; i++){
 			// if i not the index of the record we will remove
 			if(i != RecIndex){
 				// copying records
-				User_Insint32CopyRecord(&NewDB[i], User_Database[i]);
+				User_Insint32CopyRecord(&NewDB[j], User_Database[i]);
+				j++;
 			}
 		}
 		
@@ -158,6 +164,7 @@ sint_32 User_sint32RemoveAllUsers(void){
 			// remove database
 			free(User_Database);
 			User_Database = NULL;
+			User_DatabaseLength = 0;
 			return 1; // worked
 		}
 		else{
