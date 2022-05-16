@@ -12,6 +12,7 @@
 extern Admin_t AdminsInfo[NUMBER_OF_ADMINS];
 
 /*******************************************************************************************/
+
 sint_32 Admin_sint32UploadDatabases(void){
 	static sint_32 Database_Uploaded = 0;
 	if(!Database_Uploaded){
@@ -29,7 +30,7 @@ sint_32 Admin_sint32CheckLogin(uint_8* ID, uint_8* Password){
 		sint_32 Rec_Index = Admin_Insint32CheckRec(ID);
 		if(Rec_Index >= 0){
 			if(!strcmp(Password, AdminsInfo[Rec_Index].password)){
-				printf("\nWelcome Back %s!", AdminsInfo[Rec_Index].full_name);
+				printf("\nWelcome Back %s!\n\n", AdminsInfo[Rec_Index].full_name);
 				return Rec_Index;
 			}	
 		}
@@ -54,7 +55,7 @@ sint_32 Admin_sint32EditPassword(uint_8* ID){
 }
 
 sint_32 Admin_sint32ViewAllDatabase(void){
-	if(Std_sint32GetDatabaseLength != 0){
+	if(Std_sint32GetDatabaseLength() != 0){
 		printf("\t\t(full Name)\t\t\t\t(ID)\t\t(Gender)\t\t(Age)\t\t(Year Degree)\n");
 		for(int i = 0; i < Std_sint32GetDatabaseLength(); i++){
 			(void) Std_sint32ViewBrief(i); // printf a row with a brief about the student
@@ -69,7 +70,7 @@ sint_32 Admin_sint32ViewAllDatabase(void){
 
 sint_32 Admin_sint32ViewStudent(uint_8* ID){
 	// if id is not null (empty string) 
-	if(ID != NULL){
+	if(Std_sint32GetDatabaseLength() != 0){
 		// get the index of the student record in the students database
 		sint_32 Rec_Index = Std_sint32Search(ID);
 		// view the record
@@ -83,7 +84,7 @@ sint_32 Admin_sint32ViewStudent(uint_8* ID){
 		}
 	}
 	else{
-		return -2; // null pointer
+		printf("Oops! Database is Empty!\n");
 	}
 }
 
@@ -91,13 +92,16 @@ sint_32 Admin_sint32RemoveAllDatabase(void){
 	// remove the student database
 	(void) Std_sint32RemoveAll();
 	// remove the user login database
-	return User_sint32RemoveAllUsers();
+	User_sint32RemoveAllUsers();
+	printf("Database Deleted Successfully!");
+	return 1;
 }
 
 sint_32 Admin_sint32RemoveStudent(uint_8* ID){
 	if(ID != NULL){
 		(void) Std_sint32RemoveRec(ID);
 		(void) User_sint32RemoveUser(ID);
+		printf("Student Deleted Successfully!\n");
 		return 1;
 	}
 	else{
@@ -126,6 +130,15 @@ sint_32 Admin_sint32AddStudent(uint_8* ID){
 	}
 	else{
 		return -2;
+	}
+}
+
+sint_32 Admin_sint32CheckEmpty(void){
+	if(Std_sint32GetDatabaseLength() != 0){
+		return Std_sint32GetDatabaseLength();
+	}
+	else{
+		return -1;
 	}
 }
 

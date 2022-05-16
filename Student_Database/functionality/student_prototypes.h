@@ -20,6 +20,15 @@ sint_32 Std_sint32UploadDatabase(void);
 sint_32 Std_sint32Search(uint_8* ID);
 
 /************************************************************
+ * Name :           Std_sint_32GetName                      *
+ * return type :    signed int                              *
+ * parameters :     ID(the student ID), Username            *
+ * functionality :  stores the name of the student that has *
+ *                  the ID in student DB into Username      *
+ ************************************************************/
+sint_32 Std_sint_32GetName(uint_8* ID, uint_8** Username);
+
+/************************************************************
  * Name :           Std_sint32RemoveRec                     *
  * return type :    unsigned int                            *
  * parameters :     ID(the student ID)                      *

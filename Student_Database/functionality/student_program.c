@@ -12,7 +12,7 @@ static sint_32 DatabaseLength = STUDENT_NUM;
 extern Student_t Database_of_Students[STUDENT_NUM];
 
 //pointer to the array of records
-static Student_t* ptr_Database = NULL;
+Student_t* ptr_Database = NULL;
 
 /************************************************************************************************/
 
@@ -46,6 +46,18 @@ sint_32 Std_sint32Search(uint_8* ID){
 	return -1; // if the given id is not existed in the database, return -1
 }
 
+sint_32 Std_sint_32GetName(uint_8* ID, uint_8** Username){
+	if(ID != NULL){
+		sint_32 Record_Index = Std_Insint32Search(ID);
+		*Username = (uint_8*) malloc(strlen(ptr_Database[Record_Index].full_name) + 1);
+		strcpy(*Username, ptr_Database[Record_Index].full_name);
+		
+		return 1;
+	}
+	else{
+		return -1;
+	}
+}
 sint_32 Std_sint32RemoveRec(uint_8* ID){
 	if(ptr_Database != NULL){
 		if(ID != NULL){
@@ -184,26 +196,26 @@ sint_32 Std_sint32EditGrades(uint_8* ID){
 		// get the index of the student record
 		sint_32 Record_Index = Std_Insint32Search(ID);
 		// get the new grades from the Admin
-		printf("Enter the New Gerades : ");
+		printf("Enter the New Gerades : \n");
 		for(uint_16 i = 0; i < SUBJECTS_NUM; i++){
 			switch(i){
 				case 0:
-					printf("Edit Math Grades -> ");
+					printf("Edit Math Grades        -> ");
 				break;
 				case 1:
-					printf("Edit Physics Grades -> ");
+					printf("Edit Physics Grades     -> ");
 				break;
 				case 2:
-					printf("Edit Contol Grades -> ");
+					printf("Edit Contol Grades      -> ");
 				break;
 				case 3:
-					printf("Edit Logic Grades -> ");
+					printf("Edit Logic Grades       -> ");
 				break;
 				case 4:
 					printf("Edit Electronics Grades -> ");
 				break;
 			}
-			scanf("%d", &ptr_Database[Record_Index].grades[i]);
+			scanf("%f", &ptr_Database[Record_Index].grades[i]);
 		}
 		// view the new changes for the admin 
 		printf("%s's grades has changed successfully \n", ptr_Database[Record_Index].full_name);
@@ -336,16 +348,16 @@ static inline void Std_InvidPrintGrades(f32 grades[]){
 	for(int i = 0; i < SUBJECTS_NUM; i++){
 		switch(i){
 			case 0:
-				printf("*\t\tMath -> ");
+				printf("*\t\tMath        -> ");
 			break;
 			case 1:
-				printf("*\t\tPhysics -> ");
+				printf("*\t\tPhysics     -> ");
 			break;
 			case 2:
-				printf("*\t\tContol -> ");
+				printf("*\t\tContol      -> ");
 			break;
 			case 3:
-				printf("*\t\tLogic -> ");
+				printf("*\t\tLogic       -> ");
 			break;
 			case 4:
 				printf("*\t\tElectronics -> ");
