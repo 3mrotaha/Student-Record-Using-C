@@ -83,50 +83,70 @@ static sint_32 App_sint32AdminControl(void){
 	uint_8* Std_Id = NULL;
 	switch(Operation_Number){
 		case 1: // view a student record
+		
 			if(Admin_sint32CheckEmpty() != -1){
 				printf("Enter the student ID : ");
 				App_InSint32GetString(&Std_Id);
 			}
+			
 			Admin_sint32ViewStudent(Std_Id);
+			
 			if(Std_Id != NULL){
 				free(Std_Id);
 				Std_Id = NULL;
 			}
+			
 			break;
 		case 2: // view all students
+		
 			Admin_sint32ViewAllDatabase();
+			
 			break;
 		case 3: // remove a student
-			printf("Enter the student ID : ");
-			App_InSint32GetString(&Std_Id);
+		
+			if(Admin_sint32CheckEmpty() != -1){
+				printf("Enter the student ID : ");
+				App_InSint32GetString(&Std_Id);
+			}
+			
 			Admin_sint32RemoveStudent(Std_Id);
+			
 			if(Std_Id != NULL){
 				free(Std_Id);
 				Std_Id = NULL;
 			}
+			
 			break;
 		case 4: // remove all database
+		
 			Admin_sint32RemoveAllDatabase();
+			
 			break;
 		case 5: // add a student record
+		
 			printf("Enter the student ID : ");
 			App_InSint32GetString(&Std_Id);
+			
 			Admin_sint32AddStudent(Std_Id);
 			if(Std_Id != NULL){
 				free(Std_Id);
 				Std_Id = NULL;
 			}
-			break;
+			
+			break;			
 		case 6: // edit student grades
+		
 			if(Admin_sint32CheckEmpty() != -1){
 				printf("Enter the student ID : ");
 				App_InSint32GetString(&Std_Id);
 			}
+			
 			Admin_sint32EditGrades(Std_Id);
+			
 			if(Std_Id != NULL){
 				free(Std_Id);
 				Std_Id = NULL;
-			}
+			}			
 			break;
 		case 7: // edit the admin password
 			Admin_sint32EditPassword(App_ID);

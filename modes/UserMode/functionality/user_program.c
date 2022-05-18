@@ -85,7 +85,10 @@ sint_32 User_sint32EditUsername(uint_8* ID){
 		if(RecIndex >= 0){
 			return Std_sint32EditName(RecIndex);
 		}
-		return 1; // worked as expected
+		else{
+			printf("Enterd ID is not Correct!\n");
+			return -1; // wrong id
+		}
 	}
 	else{
 		return -2; // null pointer 
@@ -124,36 +127,46 @@ sint_32 User_sint32AddUser(uint_8* ID){
 }
 
 sint_32 User_sint32RemoveUser(uint_8* ID){
-	if(ID != NULL){
-		// allocating a new empty database with a smaller size, to copy the existing database into it 
-		User_t* NewDB = (User_t*) malloc(User_DatabaseLength * sizeof(User_t));
-		// getting the index of the record to be deleted from the user database
-		sint_32 RecIndex = User_Insint32CheckRec(ID);
-		// copying the records into the new database, but we won't copy the record that we will remove
-		for(int i = 0, j = 0; i < User_DatabaseLength; i++){
-			// if i not the index of the record we will remove
-			if(i != RecIndex){
-				// copying records
-				User_Insint32CopyRecord(&NewDB[j], User_Database[i]);
-				j++;
+	if(User_Database != NULL){
+		if(ID != NULL){
+			// getting the index of the record to be deleted from the user database
+			sint_32 RecIndex = User_Insint32CheckRec(ID);
+			if(RecIndex >= 0){
+				// allocating a new empty database with a smaller size, to copy the existing database into it 
+				User_t* NewDB = (User_t*) malloc(User_DatabaseLength * sizeof(User_t));
+				// copying the records into the new database, but we won't copy the record that we will remove
+				for(int i = 0, j = 0; i < User_DatabaseLength; i++){
+					// if i not the index of the record we will remove
+					if(i != RecIndex){
+						// copying records
+						User_Insint32CopyRecord(&NewDB[j], User_Database[i]);
+						j++;
+					}
+				}
+				
+				// Decreasing the Database by 1
+				User_DatabaseLength--;
+				
+				// free the old database
+				free(User_Database);
+				
+				// get the new database
+				User_Database = NewDB;
+				NewDB = NULL;
+				// returning the new length of the database means that the function worked as we expected
+				return User_DatabaseLength;
+			}
+			else{
+				return -1; // wrong id
 			}
 		}
-		
-		// Decreasing the Database by 1
-		User_DatabaseLength--;
-		
-		// free the old database
-		free(User_Database);
-		
-		// get the new database
-		User_Database = NewDB;
-		NewDB = NULL;
-		// returning the new length of the database means that the function worked as we expected
-		return User_DatabaseLength;
+		else{
+			// null pointer
+			return -2;
+		}	
 	}
 	else{
-		// null pointer
-		return -2;
+		return -3; // empty database
 	}
 }
 
@@ -172,7 +185,7 @@ sint_32 User_sint32RemoveAllUsers(void){
 		}	
 	}
 	else{
-		return -3;
+		return -3; // empty Database
 	}
 }
  

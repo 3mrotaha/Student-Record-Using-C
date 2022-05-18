@@ -63,7 +63,7 @@ sint_32 Admin_sint32ViewAllDatabase(void){
 		return 1; // done
 	}
 	else{
-		printf("Oops! Database is Empty!\n");
+		printf("-----Database is Empty!-----\n");
 		return -2;
 	}
 }
@@ -79,30 +79,45 @@ sint_32 Admin_sint32ViewStudent(uint_8* ID){
 			return 1; // function worked, id is correct
 		}
 		else{
-			printf("Entered ID is not correct\n");
+			printf("-----Student ID is not correct!-----\n");
 			return -1;
 		}
 	}
 	else{
-		printf("Oops! Database is Empty!\n");
+		printf("-----Database is Empty!-----\n");
 	}
 }
 
 sint_32 Admin_sint32RemoveAllDatabase(void){
 	// remove the student database
-	(void) Std_sint32RemoveAll();
-	// remove the user login database
-	User_sint32RemoveAllUsers();
-	printf("Database Deleted Successfully!");
-	return 1;
+	if(Std_sint32RemoveAll() == -3){
+		// remove the user login database
+		(void) User_sint32RemoveAllUsers();
+		printf("-----Database Deleted Successfully!-----\n");
+		return 1; // Database Deleted
+	}
+	else{
+		printf("-----Database is already Empty!-----\n");
+		// database is already empty
+		return -3;
+	}
 }
 
 sint_32 Admin_sint32RemoveStudent(uint_8* ID){
 	if(ID != NULL){
-		(void) Std_sint32RemoveRec(ID);
-		(void) User_sint32RemoveUser(ID);
-		printf("Student Deleted Successfully!\n");
-		return 1;
+		if(Std_sint32RemoveRec(ID) >= 0){
+			(void) User_sint32RemoveUser(ID);
+			printf("-----Student Deleted Successfully!-----\n");
+			return 1; // deleted
+		}
+		else if(Std_sint32RemoveRec(ID) == -1){
+			printf("-----Student ID is not correct!-----\n");
+			return -1;
+		}
+		else{
+			printf("-----Database is Empty!-----\n");
+			return -3; // database empty
+		}
 	}
 	else{
 		return -2;
@@ -111,8 +126,19 @@ sint_32 Admin_sint32RemoveStudent(uint_8* ID){
 
 sint_32 Admin_sint32EditGrades(uint_8* ID){
 	if(ID != NULL){
-		(void) Std_sint32EditGrades(ID);
-		return 1;
+		if(Std_sint32GetDatabaseLength() != 0){
+			 if(Std_sint32EditGrades(ID) >= 0){
+				return 1; 
+			 }
+			 else{
+				printf("-----Student ID is not correct!-----\n");
+				return -1;
+			 }
+		}
+		else{
+			printf("-----Database is Empty! Add some students-----\n");
+			return -3;
+		}
 	}
 	else{
 		return -2;

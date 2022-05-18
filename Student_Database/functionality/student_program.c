@@ -58,39 +58,45 @@ sint_32 Std_sint_32GetName(uint_8* ID, uint_8** Username){
 		return -1;
 	}
 }
+
 sint_32 Std_sint32RemoveRec(uint_8* ID){
 	if(ptr_Database != NULL){
 		if(ID != NULL){
 			// get the index of the record
 			sint_32 Record_Index = Std_Insint32Search(ID);
-			// defining a new database that is less than the older by 1 student record
-			Student_t* NewPtr_Database = (Student_t*) malloc((DatabaseLength - 1) * sizeof(Student_t));
-			
-			for(uint_16 i = 0, j = 0; i < DatabaseLength; i++){
-				// if i is not the index of the record we will remove
-				if(i != Record_Index){
-					// copy the old i(th) record into the new memory place, except the record 
-					// that we want to delete
-					Std_Insint32CopyRec(&NewPtr_Database[j], ptr_Database[i]);
-					j++;
+			if(Record_Index >= 0){
+				// defining a new database that is less than the older by 1 student record
+				Student_t* NewPtr_Database = (Student_t*) malloc((DatabaseLength - 1) * sizeof(Student_t));
+				
+				for(uint_16 i = 0, j = 0; i < DatabaseLength; i++){
+					// if i is not the index of the record we will remove
+					if(i != Record_Index){
+						// copy the old i(th) record into the new memory place, except the record 
+						// that we want to delete
+						Std_Insint32CopyRec(&NewPtr_Database[j], ptr_Database[i]);
+						j++;
+					}
 				}
-			}
-			// decrease the follower of the database length by 1, as 1 record is actually now deleted
-			DatabaseLength--;
-			// free the old memory
-			free(ptr_Database);
-			// assign the pointer to the new memory
-			ptr_Database = NewPtr_Database;
-			// we don't need the new pointer then we assign it to NULL
-			NewPtr_Database = NULL;
-			
-			if(DatabaseLength == 0){
+				// decrease the follower of the database length by 1, as 1 record is actually now deleted
+				DatabaseLength--;
+				// free the old memory
 				free(ptr_Database);
-				ptr_Database = NULL;
+				// assign the pointer to the new memory
+				ptr_Database = NewPtr_Database;
+				// we don't need the new pointer then we assign it to NULL
+				NewPtr_Database = NULL;
+				
+				if(DatabaseLength == 0){
+					free(ptr_Database);
+					ptr_Database = NULL;
+				}
+				// this return value can be used to ensure that the function worked as we expected
+				return 1;
 			}
-			
-			// this return value can be used to ensure that the function worked as we expected
-			return DatabaseLength;
+			else{
+				// ID is not correct
+				return -1;
+			}
 		}
 		else{
 			// this returned value tells the developer that this function has crashed
@@ -99,7 +105,8 @@ sint_32 Std_sint32RemoveRec(uint_8* ID){
 		}
 	}
 	else{
-		printf("Nothing to Delete!\n");
+		// Database is Empty
+		return -3;
 	}
 }
 
@@ -113,8 +120,8 @@ sint_32 Std_sint32RemoveAll(void){
 		return 1; // worked
 	}
 	else{
-		printf("Nothing to Delete!");
-		return -2;
+		// Database is Empty
+		return -3;
 	}
 }
 
@@ -180,7 +187,7 @@ sint_32 Std_sint32EditName(sint_32 Record_Index){
 		printf("Enter the new Full Name: ");
 		Std_Insint32GetString(&ptr_Database[Record_Index].full_name);
 		// view changes for the user
-		printf("Student name changed to : %s", ptr_Database[Record_Index].full_name);
+		printf("-----Student name changed to : %s-----\n", ptr_Database[Record_Index].full_name);
 		// this return value can be used to ensure that the function worked as we expected
 		return 1;
 	}
@@ -195,37 +202,42 @@ sint_32 Std_sint32EditGrades(uint_8* ID){
 	if(ID != NULL){
 		// get the index of the student record
 		sint_32 Record_Index = Std_Insint32Search(ID);
-		// get the new grades from the Admin
-		printf("Enter the New Gerades : \n");
-		for(uint_16 i = 0; i < SUBJECTS_NUM; i++){
-			switch(i){
-				case 0:
-					printf("Edit Math Grades        -> ");
-				break;
-				case 1:
-					printf("Edit Physics Grades     -> ");
-				break;
-				case 2:
-					printf("Edit Contol Grades      -> ");
-				break;
-				case 3:
-					printf("Edit Logic Grades       -> ");
-				break;
-				case 4:
-					printf("Edit Electronics Grades -> ");
-				break;
+		if(Record_Index >= 0){
+			// get the new grades from the Admin
+			printf("-----Enter the New Gerades------\n");
+			for(uint_16 i = 0; i < SUBJECTS_NUM; i++){
+				switch(i){
+					case 0:
+						printf("Edit Math Grades        -> ");
+					break;
+					case 1:
+						printf("Edit Physics Grades     -> ");
+					break;
+					case 2:
+						printf("Edit Contol Grades      -> ");
+					break;
+					case 3:
+						printf("Edit Logic Grades       -> ");
+					break;
+					case 4:
+						printf("Edit Electronics Grades -> ");
+					break;
+				}
+				scanf("%f", &ptr_Database[Record_Index].grades[i]);
 			}
-			scanf("%f", &ptr_Database[Record_Index].grades[i]);
+			// view the new changes for the admin 
+			printf("------%s's grades has changed successfully------\n", ptr_Database[Record_Index].full_name);
+			// this return value can be used to ensure that the function worked as we expected
+			return 1;	
 		}
-		// view the new changes for the admin 
-		printf("%s's grades has changed successfully \n", ptr_Database[Record_Index].full_name);
-		// this return value can be used to ensure that the function worked as we expected
-		return 1;
+		else{
+			// id is not correct
+			return -1;
+		}
 	}
 	else{
-		// this returned value tells the developer that this function has crashed
-		// or didn't work as we expected
-		return -1;
+		// null pointer or null character enterd 
+		return -2;
 	}
 
 }
@@ -247,7 +259,7 @@ sint_32 Std_sint32ViewRecord(sint_32 Record_Index){
 			printf("* Grades : \t\t\t\t\t\t\t\t\t\t\t\t\n");
 			Std_InvidPrintGrades(ptr_Database[Record_Index].grades);
 			printf("*\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
-			printf("* Total Grades : %0.2f%%", (Std_Inf32TotalGrades(ptr_Database[Record_Index].grades) / (SUBJECTS_NUM * 100)) * 100);
+			printf("* Total Grades : %0.2f%%	", (Std_Inf32TotalGrades(ptr_Database[Record_Index].grades) / (SUBJECTS_NUM * 100)) * 100);
 			Std_InvidGPA(Std_Inf32TotalGrades(ptr_Database[Record_Index].grades), (SUBJECTS_NUM * 100));
 			printf("\t\t\t\t\t\t\t\t\t\n");
 			printf("*\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n");
@@ -256,13 +268,11 @@ sint_32 Std_sint32ViewRecord(sint_32 Record_Index){
 		}
 		else{
 			// the index does not exist
-			printf("Wrong ID, Student Doesn't Exist!\n");
 			return -1;
 		}	
 	}
 	else{
-		printf("Oops! Database is Empty!\n");
-		return -2;
+		return -3;
 	}
 }
 
