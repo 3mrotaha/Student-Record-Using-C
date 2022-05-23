@@ -1,2 +1,0 @@
-#@copyright : Amr Mohamed Taha
-
