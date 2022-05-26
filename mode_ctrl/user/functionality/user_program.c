@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "..\..\..\Libraries\STD_TYPES.h"
-#include "..\..\..\Student_Database\functionality\student_prototypes.h"
+#include "..\..\..\lib\std_types\STD_TYPES.h"
+#include "..\..\..\student_db\functionality\student_prototypes.h"
 #include "..\Database\userDB.h"
 #include "user_private.h"
 
