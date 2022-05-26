@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "..\..\..\Libraries\STD_TYPES.h"
-#include "..\..\..\Student_Database\functionality\student_prototypes.h"
-#include "..\..\UserMode\functionality\user_prototypes.h"
+#include "..\..\..\lib\std_types\STD_TYPES.h"
+#include "..\..\..\student_db\functionality\student_prototypes.h"
+#include "..\..\user\functionality\user_prototypes.h"
 #include "..\Database\AdminDB.h"
 #include "admin_private.h"
 #include "admin_prototypes.h"

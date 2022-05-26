@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "..\..\Libraries\STD_TYPES.h"
-#include "..\..\Student_Database\functionality\student_prototypes.h"
-#include "..\..\modes\UserMode\functionality\user_prototypes.h"
-#include "..\..\modes\AdminMode\functionality\admin_prototypes.h"
+#include "..\..\lib\std_types\STD_TYPES.h"
+#include "..\..\student_db\functionality\student_prototypes.h"
+#include "..\..\mode_ctrl\user\functionality\user_prototypes.h"
+#include "..\..\mode_ctrl\admin\functionality\admin_prototypes.h"
 #include "app_private.h"
 
 //id enterd in the login

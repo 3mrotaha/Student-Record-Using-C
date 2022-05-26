@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "..\..\Libraries\STD_TYPES.h"
+#include "..\..\lib\std_types\STD_TYPES.h"
 #include "..\Database\studentsDB.h"
 #include "student_private.h"
 
