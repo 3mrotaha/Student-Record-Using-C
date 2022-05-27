@@ -2,14 +2,6 @@
 #define _APP_PRIVATE_
 
 /****************************************************************
- * Name :           App_Insint32GetString                       *
- * return type :    signed int                                  *
- * parameters :     Str                                         *
- * functionality :  Reads a string                              *
- ****************************************************************/
-static inline sint_32 App_InSint32GetString(uint_8** Str);
-
-/****************************************************************
  * Name :           App_sint32AdminControl                      *
  * return type :    signed int                                  *
  * parameters :     void                                        *

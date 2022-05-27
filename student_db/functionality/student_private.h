@@ -15,15 +15,6 @@
 static inline sint_32 Std_Insint32Search(uint_8* ID);
 
 /************************************************************
- * Name :           Std_sint32GetString                     *
- * return type :    signed int                              *
- * parameters :    str(pointer to pointer to unsigned char) *
- * functionality :  it allocates memory for a the string    *
- *                  and reads a string.                     * 
- ************************************************************/
-static inline sint_32 Std_Insint32GetString(uint_8** Str);
-
-/************************************************************
  * Name :           Std_Insint32CopyRec                     *
  * return type :    signed int                              *
  * parameters :    -Ptr_Database : pointer to struct        *

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "..\..\lib\std_types\STD_TYPES.h"
+#include "..\..\lib\std_func\prototype.h"
 #include "..\Database\studentsDB.h"
 #include "student_private.h"
 
@@ -138,11 +139,11 @@ sint_32 Std_sint32AddRec(uint_8* ID){
 		
 		// Reading the name of the new student
 		printf("Enter The Student Full Name: ");
-		Std_Insint32GetString(&ptr_Database[DatabaseLength - 1].full_name);
+		STDFUNC_sint32GetString(&ptr_Database[DatabaseLength - 1].full_name);
 		
 		// Reading the Gender of the new student
 		printf("Enter the Student gender: ");
-		Std_Insint32GetString(&ptr_Database[DatabaseLength - 1].gender);
+		STDFUNC_sint32GetString(&ptr_Database[DatabaseLength - 1].gender);
 		
 		// Reading the Age of the new student
 		printf("Enter the Student age: ");
@@ -185,7 +186,7 @@ sint_32 Std_sint32EditName(sint_32 Record_Index){
 		free(ptr_Database[Record_Index].full_name);
 		// get the new name
 		printf("Enter the new Full Name: ");
-		Std_Insint32GetString(&ptr_Database[Record_Index].full_name);
+		STDFUNC_sint32GetString(&ptr_Database[Record_Index].full_name);
 		// view changes for the user
 		printf("-----Student name changed to : %s-----\n", ptr_Database[Record_Index].full_name);
 		// this return value can be used to ensure that the function worked as we expected
@@ -304,18 +305,6 @@ static inline sint_32 Std_Insint32Search(uint_8* ID){
 	return -1; // if the given id is not existed in the database, return -1
 }
 
-static inline sint_32 Std_Insint32GetString(uint_8** Str){
-		// allocatting enough memory (at first only) as we don't know
-		// how long the string will be.
-		*Str = (uint_8*) malloc(35 * sizeof(uint_8));
-		
-		scanf(" %[^\n]", *Str); // reading the string
-		
-		// reallocatting a memory that fits the string we has just read
-		*Str = realloc(*Str, strlen(*Str) + 1);
-		// this return value can be used to ensure that the function worked as we expected
-		return 1;
-}
 
 static inline sint_32 Std_Insint32CopyRec(Student_t* Ptr, const Student_t O_Ptr){
 	if(Ptr != NULL){

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "..\..\lib\std_types\STD_TYPES.h"
+#include "..\..\lib\std_func\prototype.h"
 #include "..\..\student_db\functionality\student_prototypes.h"
 #include "..\..\mode_ctrl\user\functionality\user_prototypes.h"
 #include "..\..\mode_ctrl\admin\functionality\admin_prototypes.h"
@@ -28,9 +29,9 @@ static uint_8* App_ID;
 		 }
 		 /***************Get Login Info***********************/
 		 printf("Enter your ID : ");
-		 App_InSint32GetString(&App_ID);
+		 STDFUNC_sint32GetString(&App_ID);
 		 printf("Enter your password : ");
-		 App_InSint32GetString(&Password);
+		 STDFUNC_sint32GetString(&Password);
 		 
 		 /**************Check Login Info*********************/
 		 if(Login_Mode == 1){ // admin mode
@@ -86,7 +87,7 @@ static sint_32 App_sint32AdminControl(void){
 		
 			if(Admin_sint32CheckEmpty() != -1){
 				printf("Enter the student ID : ");
-				App_InSint32GetString(&Std_Id);
+				STDFUNC_sint32GetString(&Std_Id);
 			}
 			
 			Admin_sint32ViewStudent(Std_Id);
@@ -106,7 +107,7 @@ static sint_32 App_sint32AdminControl(void){
 		
 			if(Admin_sint32CheckEmpty() != -1){
 				printf("Enter the student ID : ");
-				App_InSint32GetString(&Std_Id);
+				STDFUNC_sint32GetString(&Std_Id);
 			}
 			
 			Admin_sint32RemoveStudent(Std_Id);
@@ -125,7 +126,7 @@ static sint_32 App_sint32AdminControl(void){
 		case 5: // add a student record
 		
 			printf("Enter the student ID : ");
-			App_InSint32GetString(&Std_Id);
+			STDFUNC_sint32GetString(&Std_Id);
 			
 			Admin_sint32AddStudent(Std_Id);
 			if(Std_Id != NULL){
@@ -138,7 +139,7 @@ static sint_32 App_sint32AdminControl(void){
 		
 			if(Admin_sint32CheckEmpty() != -1){
 				printf("Enter the student ID : ");
-				App_InSint32GetString(&Std_Id);
+				STDFUNC_sint32GetString(&Std_Id);
 			}
 			
 			Admin_sint32EditGrades(Std_Id);
@@ -181,17 +182,4 @@ static sint_32 App_sint32SystemLogout(void){
 	printf("Logout? (0/1) > ");
 	scanf("%d", &Logout);
 	return Logout;
-}
-
-static inline sint_32 App_InSint32GetString(uint_8** Str){
-		// allocatting enough memory (at first only) as we don't know
-		// how long the string will be.
-		*Str = (uint_8*) malloc(35 * sizeof(uint_8));
-		
-		scanf("%s", *Str); // reading the string
-		
-		// reallocatting a memory that fits the string we has just read
-		*Str = realloc(*Str, strlen(*Str) + 1);
-		// this return value can be used to ensure that the function worked as we expected
-		return 1;
 }
