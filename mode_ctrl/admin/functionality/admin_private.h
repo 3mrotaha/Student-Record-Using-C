@@ -11,14 +11,6 @@
 static inline sint_32 Admin_Insint32CheckRec(uint_8* ID);
 
 /****************************************************************
- * Name :           Admin_Insint32GetString                     *
- * return type :    signed int                                  *
- * parameters :     Str                                         *
- * functionality :  Reads a string                              *
- ****************************************************************/
-static inline sint_32 Admin_Insint32GetString(uint_8** Str);
-
-/****************************************************************
  * Name :           Admin_Insint32CopyRec                       *
  * return type :    signed int                                  *
  * parameters :     NewRec, Rec                                 *

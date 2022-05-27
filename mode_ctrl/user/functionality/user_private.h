@@ -16,14 +16,6 @@
  ****************************************************************/
  static inline sint_32 User_Insint32CheckRec(uint_8* ID);
  
-/****************************************************************
- * Name :           User_Insint32GetString                      *
- * return type :    signed int                                  *
- * parameters :     void                                        *
- * functionality :  used to read a string, and fits its memory  *
- *                  to the number of its characters             *
- ****************************************************************/
- static inline sint_32 User_Insint32GetString(uint_8** Str);
  
 /****************************************************************
  * Name :           User_Insint32CopyRecord                     *

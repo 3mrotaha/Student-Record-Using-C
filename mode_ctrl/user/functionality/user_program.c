@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "..\..\..\lib\std_types\STD_TYPES.h"
+#include "..\..\..\lib\std_func\prototype.h"
 #include "..\..\..\student_db\functionality\student_prototypes.h"
 #include "..\Database\userDB.h"
 #include "user_private.h"
@@ -103,7 +104,7 @@ sint_32 User_sint32EditPassword(uint_8* ID){
 		free(User_Database[Record_Index].Password);
 		// Getting the new password
 		printf("Enter New Password : ");
-		User_Insint32GetString(&User_Database[Record_Index].Password);
+		STDFUNC_sint32GetString(&User_Database[Record_Index].Password);
 		printf("Password Edited Successfully");
 	}
 	else{
@@ -123,7 +124,7 @@ sint_32 User_sint32AddUser(uint_8* ID){
 	
 	// making a password for the new record
 	printf("Enter a Password : ");
-	(void) User_Insint32GetString(&User_Database[User_DatabaseLength - 1].Password);
+	(void) STDFUNC_sint32GetString(&User_Database[User_DatabaseLength - 1].Password);
 }
 
 sint_32 User_sint32RemoveUser(uint_8* ID){
@@ -207,16 +208,6 @@ static inline sint_32 User_Insint32CheckRec(uint_8* ID){
 	}
 }
 
-
-static inline sint_32 User_Insint32GetString(uint_8** Str){
-	// initialize the memory space with 35 unsigned characters
-	*Str = (uint_8*) malloc(35 * sizeof(uint_8));
-	scanf(" %[^\n]", *Str); // reading the string 
-	// reallocating a space fits the string length
-	*Str = (uint_8*) realloc(*Str, strlen(*Str) + 1);
-	
-	return 1; // worked as expected
-}
 
 static inline sint_32 User_Insint32CopyRecord(User_t* NewRec, const User_t Rec){
 	if(NewRec != NULL){

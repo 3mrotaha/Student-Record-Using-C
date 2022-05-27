@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "..\..\..\lib\std_types\STD_TYPES.h"
+#include "..\..\..\lib\std_func\prototype.h"
 #include "..\..\..\student_db\functionality\student_prototypes.h"
 #include "..\..\user\functionality\user_prototypes.h"
 #include "..\Database\AdminDB.h"
@@ -45,7 +46,7 @@ sint_32 Admin_sint32EditPassword(uint_8* ID){
 	if(ID != NULL){
 		sint_32 Rec_Index = Admin_Insint32CheckRec(ID);
 		printf("Enter Your New Password : ");
-		(void) Admin_Insint32GetString(&AdminsInfo[Rec_Index].password);
+		(void) STDFUNC_sint32GetString(&AdminsInfo[Rec_Index].password);
 		printf("Password updated!\n");
 		return 1;	
 	}
@@ -182,15 +183,6 @@ static inline sint_32 Admin_Insint32CheckRec(uint_8* ID){
 	}
 }
 
-static inline sint_32 Admin_Insint32GetString(uint_8** Str){
-	// initialize the memory space with 35 unsigned characters
-	*Str = (uint_8*) malloc(35 * sizeof(uint_8));
-	scanf(" %[^\n]", *Str); // reading the string 
-	// reallocating a space fits the string length
-	*Str = (uint_8*) realloc(*Str, strlen(*Str) + 1);
-	
-	return 1; // worked as expected
-}
 
 static inline sint_32 Admin_Insint32CopyRec(Admin_t* NewRec, const Admin_t Rec){
 	if(NewRec != NULL){
