@@ -147,7 +147,7 @@ sint_32 Std_sint32AddRec(uint_8* ID){
 		
 		// Reading the Age of the new student
 		printf("Enter the Student age: ");
-		scanf("%i", &ptr_Database[DatabaseLength - 1].age);
+		scanf("%hu", &ptr_Database[DatabaseLength - 1].age);
 		
 		// Reading the Grades of the new student
 		printf("Enter the Student greades: ");
@@ -188,7 +188,7 @@ sint_32 Std_sint32EditName(sint_32 Record_Index){
 		printf("Enter the new Full Name: ");
 		STDFUNC_sint32GetString(&ptr_Database[Record_Index].full_name);
 		// view changes for the user
-		printf("-----Student name changed to : %s-----/n", ptr_Database[Record_Index].full_name);
+		printf("-----Student name changed to : %s-----\n", ptr_Database[Record_Index].full_name);
 		// this return value can be used to ensure that the function worked as we expected
 		return 1;
 	}
@@ -205,7 +205,7 @@ sint_32 Std_sint32EditGrades(uint_8* ID){
 		sint_32 Record_Index = Std_Insint32Search(ID);
 		if(Record_Index >= 0){
 			// get the new grades from the Admin
-			printf("-----Enter the New Gerades------/n");
+			printf("-----Enter the New Gerades------\n");
 			for(uint_16 i = 0; i < SUBJECTS_NUM; i++){
 				switch(i){
 					case 0:
@@ -227,7 +227,7 @@ sint_32 Std_sint32EditGrades(uint_8* ID){
 				scanf("%f", &ptr_Database[Record_Index].grades[i]);
 			}
 			// view the new changes for the admin 
-			printf("------%s's grades has changed successfully------/n", ptr_Database[Record_Index].full_name);
+			printf("------%s's grades has changed successfully------\n", ptr_Database[Record_Index].full_name);
 			// this return value can be used to ensure that the function worked as we expected
 			return 1;	
 		}
@@ -250,21 +250,21 @@ sint_32 Std_sint32GetDatabaseLength(void){
 sint_32 Std_sint32ViewRecord(sint_32 Record_Index){
 	if(ptr_Database != NULL){
 		if(Record_Index >= 0){
-			printf("***********************************************************************************************/n");
-			printf("*/t/t/t/t/t/t/t/t/t/t/t/t/t/t/n");
-			printf("* Name   : %s/t/t/t/t/t/t/t/t/t/t/n", ptr_Database[Record_Index].full_name);
-			printf("* ID     : %s/t/t/t/t/t/t/t/t/t/t/n", ptr_Database[Record_Index].Std_ID);
-			printf("* Gender : %s/t/t/t/t/t/t/t/t/t/t/n", ptr_Database[Record_Index].gender);
-			printf("* Age    : %i/t/t/t/t/t/t/t/t/t/t/n", ptr_Database[Record_Index].age);
-			printf("***********************************************************************************************/n");
-			printf("* Grades : /t/t/t/t/t/t/t/t/t/t/t/t/n");
+			printf("***********************************************************************************************\n");
+			printf("*/t/t/t/t/t/t/t/t/t/t/t/t/t/t\n");
+			printf("* Name   : %s/t/t/t/t/t/t/t/t/t/t\n", ptr_Database[Record_Index].full_name);
+			printf("* ID     : %s/t/t/t/t/t/t/t/t/t/t\n", ptr_Database[Record_Index].Std_ID);
+			printf("* Gender : %s/t/t/t/t/t/t/t/t/t/t\n", ptr_Database[Record_Index].gender);
+			printf("* Age    : %i/t/t/t/t/t/t/t/t/t/t\n", ptr_Database[Record_Index].age);
+			printf("***********************************************************************************************\n");
+			printf("* Grades : /t/t/t/t/t/t/t/t/t/t/t/t\n");
 			Std_InvidPrintGrades(ptr_Database[Record_Index].grades);
-			printf("*/t/t/t/t/t/t/t/t/t/t/t/t/t/t/n");
+			printf("*/t/t/t/t/t/t/t/t/t/t/t/t/t/t\n");
 			printf("* Total Grades : %0.2f%%	", (Std_Inf32TotalGrades(ptr_Database[Record_Index].grades) / (SUBJECTS_NUM * 100)) * 100);
 			Std_InvidGPA(Std_Inf32TotalGrades(ptr_Database[Record_Index].grades), (SUBJECTS_NUM * 100));
-			printf("/t/t/t/t/t/t/t/t/t/n");
-			printf("*/t/t/t/t/t/t/t/t/t/t/t/t/t/t/n");
-			printf("***********************************************************************************************/n");
+			printf("/t/t/t/t/t/t/t/t/t\n");
+			printf("*/t/t/t/t/t/t/t/t/t/t/t/t/t/t\n");
+			printf("***********************************************************************************************\n");
 			return 1; // worked as we expected
 		}
 		else{
@@ -287,7 +287,7 @@ sint_32 Std_sint32ViewBrief(sint_32 Record_Index){
 		printf("%0.2f%%/t", (Std_Inf32TotalGrades(ptr_Database[Record_Index].grades) / (100 * SUBJECTS_NUM)) * 100.0);
 		printf("/t");
 		Std_InvidGPA(Std_Inf32TotalGrades(ptr_Database[Record_Index].grades), (100 * SUBJECTS_NUM));
-		printf("/n");
+		printf("\n");
 		return 1;
 	}
 	else{
@@ -364,7 +364,7 @@ static inline void Std_InvidPrintGrades(f32 grades[]){
 		}
 		printf("%0.2f/t", grades[i]);
 		Std_InvidGPA(grades[i], 100);
-		printf("/t/t/t/t/t/t/t/t/t/t/n");
+		printf("/t/t/t/t/t/t/t/t/t/t\n");
 	}
 }
 
