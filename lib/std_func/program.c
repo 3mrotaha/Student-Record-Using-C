@@ -9,7 +9,7 @@ sint_32 STDFUNC_sint32GetString(uint_8** Str){
 		// how long the string will be.
 		*Str = (uint_8*) malloc(35 * sizeof(uint_8));
 		
-		scanf(" %[^\n]", *Str); // reading the string
+		scanf(" %[^/n]", *Str); // reading the string
 		
 		// reallocatting a memory that fits the string we has just read
 		*Str = realloc(*Str, strlen(*Str) + 1);

@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "..\..\..\lib\std_types\STD_TYPES.h"
-#include "..\..\..\lib\std_func\prototype.h"
-#include "..\..\..\student_db\functionality\student_prototypes.h"
-#include "..\Database\userDB.h"
+#include "../../lib/std_types/STD_TYPES.h"
+#include "../../lib/std_func/prototype.h"
+#include "../../student/src/student_prototypes.h"
+#include "Database/userDB.h"
 #include "user_private.h"
 
 
@@ -46,7 +46,7 @@ sint_32 User_sint32CheckLogin(uint_8* ID, uint_8* Pswrd){
 			// it will return 0 if the entered password matches the one in the data base
 			if(!strcmp(Pswrd, User_Database[RecIndex].Password)){
 				Std_sint_32GetName(ID, &Username);
-				printf("Welcome Back, %s\n\n", Username);
+				printf("Welcome Back, %s/n/n", Username);
 				return RecIndex; // enable access to the record
 			}
 		}
@@ -87,7 +87,7 @@ sint_32 User_sint32EditUsername(uint_8* ID){
 			return Std_sint32EditName(RecIndex);
 		}
 		else{
-			printf("Enterd ID is not Correct!\n");
+			printf("Enterd ID is not Correct!/n");
 			return -1; // wrong id
 		}
 	}

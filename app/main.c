@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "..\lib\std_types\STD_TYPES.h"
-#include "functionality\app_prototypes.h"
+#include "../lib/std_types/STD_TYPES.h"
+#include "src/app_prototypes.h"
 
 
 int main(void){

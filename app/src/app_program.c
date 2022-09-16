@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "..\..\lib\std_types\STD_TYPES.h"
-#include "..\..\lib\std_func\prototype.h"
-#include "..\..\student_db\functionality\student_prototypes.h"
-#include "..\..\mode_ctrl\user\functionality\user_prototypes.h"
-#include "..\..\mode_ctrl\admin\functionality\admin_prototypes.h"
+#include "../../lib/std_types/STD_TYPES.h"
+#include "../../lib/std_func/prototype.h"
+#include "../../student_db/functionality/student_prototypes.h"
+#include "../../mode_ctrl/user/functionality/user_prototypes.h"
+#include "../../mode_ctrl/admin/functionality/admin_prototypes.h"
 #include "app_private.h"
 
 //id enterd in the login
@@ -18,14 +18,14 @@ static uint_8* App_ID;
 	 sint_32 Login_Mode, Login_Check = -1, Login_Counter = 0;
 	 
 	 /*****************Choose Mode*************************/
-	 printf("Login modes : \n (1) Admin Mode \n (2) User Mode\n");
+	 printf("Login modes : /n (1) Admin Mode /n (2) User Mode/n");
 	 printf("Choose Login Mode > ");
 	 scanf("%d", &Login_Mode);
 	 uint_8* Password;
 
 	 while(Login_Check == -1 && Login_Counter < 3){
 		 if(Login_Counter > 0){
-			 printf("Your ID or Password is not correct, please try again!\n");
+			 printf("Your ID or Password is not correct, please try again!/n");
 		 }
 		 /***************Get Login Info***********************/
 		 printf("Enter your ID : ");
@@ -52,7 +52,7 @@ static uint_8* App_ID;
 	Password = NULL;
 	 
 	 if(Login_Check == -1){
-		 printf("You can't login any more\n");
+		 printf("You can't login any more/n");
 	 }
 	 
 	 return Login_Check;
@@ -77,8 +77,8 @@ static uint_8* App_ID;
 
 static sint_32 App_sint32AdminControl(void){
 	sint_32 Operation_Number;
-	printf(" (1) View a student record\n (2) View a All records\n (3) Remove a student record\n (4) Remove All records\n (5) Add A student\n");
-	printf(" (6) Edit Student grades\n (7) Edit Your Password\n");
+	printf(" (1) View a student record/n (2) View a All records/n (3) Remove a student record/n (4) Remove All records/n (5) Add A student/n");
+	printf(" (6) Edit Student grades/n (7) Edit Your Password/n");
 	printf("Choose an operation > ");
 	scanf("%d", &Operation_Number);
 	uint_8* Std_Id = NULL;
@@ -159,7 +159,7 @@ static sint_32 App_sint32AdminControl(void){
  
 static sint_32 App_sint32UserControl(void){
 	sint_32 Operation_Number;
-	printf(" (1) View a your record\n (2) Edit Student name\n (3) Edit Your Password\n");
+	printf(" (1) View a your record/n (2) Edit Student name/n (3) Edit Your Password/n");
 	printf("Choose an operation > ");
 	scanf("%d", &Operation_Number);
 	switch(Operation_Number){
